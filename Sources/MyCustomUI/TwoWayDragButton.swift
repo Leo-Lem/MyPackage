@@ -1,0 +1,72 @@
+//
+//  TwoWayDragButton.swift
+//  
+//
+//  Created by Leopold Lemmermann on 04.12.21.
+//
+
+import SwiftUI
+import MyOthers
+
+public struct TwoWayDragButton: View {
+    let mainSymbol: String, leftSymbol: String, rightSymbol: String
+    let leftAction: () -> Void, rightAction: () -> Void
+    
+    @State private var offset = CGSize.zero
+    private let border: CGFloat = 50
+    private var actionBorder: CGFloat { 0.8 * border}
+    
+    public var body: some View {
+        HStack {
+            Spacer(minLength: border)
+            ZStack {
+                Image(systemName: mainSymbol)
+                    .resizable()
+                    .opacity(1 - (Double(abs(offset.width / actionBorder))))
+                Image(systemName: leftSymbol)
+                    .resizable()
+                    .opacity(-Double(offset.width) / actionBorder)
+                Image(systemName: rightSymbol)
+                    .resizable()
+                    .opacity(Double(offset.width) / actionBorder)
+            }
+            .animation(.default, value: offset)
+            .aspectRatio(1, contentMode: .fit)
+            .offset(x: offset.width)
+            .gesture(
+                DragGesture()
+                    .onChanged { gesture in
+                        var drag: CGFloat { gesture.translation.width }
+                        
+                        if drag < border && drag > -border {
+                            self.offset = gesture.translation
+                        }
+                    }
+                    .onEnded { gesture in
+                        var drag: CGFloat { gesture.translation.width }
+                        
+                        if drag < -actionBorder { leftAction() }
+                        if drag > actionBorder { rightAction() }
+                        
+                        self.offset = .zero
+                    }
+            )
+            Spacer(minLength: border)
+        }
+        .scaledToFit()
+    }
+    
+    public init(symbols: [String] = [], leftAction: @escaping () -> Void = {}, rightAction: @escaping () -> Void = {}) {
+        self.mainSymbol = symbols[optional: 0] ?? "gear.circle"
+        self.leftSymbol = symbols[optional: 1] ?? "minus.circle"
+        self.rightSymbol = symbols[optional: 2] ?? "plus.circle"
+        self.leftAction = leftAction
+        self.rightAction = rightAction
+    }
+}
+
+struct TwoWayDragButton_Previews: PreviewProvider {
+    static var previews: some View {
+        TwoWayDragButton()
+    }
+}
