@@ -1,3 +1,3 @@
 # MyPackage
 
-Contains different general resusable objects.
+Contains different resusable elements for my projects.

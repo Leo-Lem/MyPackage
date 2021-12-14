@@ -8,7 +8,7 @@
 import SwiftUI
 import MyLayout
 
-public struct SymbolButtonView: View {
+public struct SymbolButton: View {
     private let imageName: String, size: CGFloat, action: () -> Void
     
     public var body: some View {
@@ -27,6 +27,6 @@ public struct SymbolButtonView: View {
 
 struct SymbolButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        SymbolButtonView("xmark.circle")
+        SymbolButton("xmark.circle")
     }
 }
