@@ -15,14 +15,14 @@ extension View {
         self.modifier(
             CustomFont(font, size: size, padd: padd))
     }
-    public func customBackground(_ color: Color = Color.secondaryAlpha,
+    public func customBackground(_ color: Color = Color.primaryAlpha,
                                  cornerRadius: CGFloat = LayoutDefaults().cornerRadius,
                                  shadowRadius: CGFloat = LayoutDefaults().shadowRadius,
                                  shadowOffset: CGFloat = LayoutDefaults().shadowOffset) -> some View {
         self.modifier(
             CustomBackground(color, cornerRadius: cornerRadius, shadowRadius: shadowRadius, shadowOffset: shadowOffset, isRow: false))
     }
-    public func customRowBackground(_ color: Color = Color.secondaryAlpha,
+    public func customRowBackground(_ color: Color = Color.primaryAlpha,
                                     cornerRadius: CGFloat = LayoutDefaults().cornerRadius,
                                     shadowRadius: CGFloat = LayoutDefaults().shadowRadius,
                                     shadowOffset: CGFloat = LayoutDefaults().shadowOffset) -> some View {
