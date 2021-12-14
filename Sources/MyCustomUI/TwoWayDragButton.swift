@@ -13,32 +13,32 @@ public struct TwoWayDragButton: View {
     let leftAction: () -> Void, rightAction: () -> Void
     
     @State private var offset = CGSize.zero
-    private let border: CGFloat = 50
-    private var actionBorder: CGFloat { 0.8 * border}
+    private let edgeAt: CGFloat, size: CGFloat
+    private var actionBorder: CGFloat { 0.8 * edgeAt}
     
     public var body: some View {
         HStack {
-            Spacer(minLength: border)
+            Spacer(minLength: edgeAt)
             ZStack {
                 Image(systemName: mainSymbol)
-                    .resizable()
+                    .font(.system(size: size))
                     .opacity(1 - (Double(abs(offset.width / actionBorder))))
                 Image(systemName: leftSymbol)
-                    .resizable()
+                    .font(.system(size: size))
                     .opacity(-Double(offset.width) / actionBorder)
                 Image(systemName: rightSymbol)
-                    .resizable()
+                    .font(.system(size: size))
                     .opacity(Double(offset.width) / actionBorder)
             }
             .animation(.default, value: offset)
-            .aspectRatio(1, contentMode: .fit)
+            .aspectRatio(1, contentMode: .fill)
             .offset(x: offset.width)
             .gesture(
                 DragGesture()
                     .onChanged { gesture in
                         var drag: CGFloat { gesture.translation.width }
                         
-                        if drag < border && drag > -border {
+                        if drag < edgeAt && drag > -edgeAt {
                             self.offset = gesture.translation
                         }
                     }
@@ -51,15 +51,19 @@ public struct TwoWayDragButton: View {
                         self.offset = .zero
                     }
             )
-            Spacer(minLength: border)
+            Spacer(minLength: edgeAt)
         }
         .scaledToFit()
     }
     
-    public init(symbols: [String] = [], leftAction: @escaping () -> Void = {}, rightAction: @escaping () -> Void = {}) {
-        self.mainSymbol = symbols[optional: 0] ?? "gear.circle"
+    public init(symbols: [String] = [],
+                size: CGFloat = 75, edgeAt: CGFloat = 125,
+                leftAction: @escaping () -> Void = {}, rightAction: @escaping () -> Void = {}) {
+        self.mainSymbol = symbols[optional: 0] ?? "circle"
         self.leftSymbol = symbols[optional: 1] ?? "minus.circle"
         self.rightSymbol = symbols[optional: 2] ?? "plus.circle"
+        self.size = size
+        self.edgeAt = edgeAt
         self.leftAction = leftAction
         self.rightAction = rightAction
     }

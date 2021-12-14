@@ -8,7 +8,7 @@
 import SwiftUI
 import MyLayout
 
-public struct Counter: View {
+public struct CountDisplay: View {
     private let label: String, count: String, height: CGFloat
     
     public var body: some View {
@@ -34,6 +34,6 @@ public struct Counter: View {
 
 struct CounterView_Previews: PreviewProvider {
     static var previews: some View {
-        Counter("count", "187")
+        CountDisplay("count", "187")
     }
 }
