@@ -44,8 +44,9 @@ extension Date: ConvertibleDate {
 
 extension DateComponents: ConvertibleDate {
     public func getDate() -> Date {
-        Calendar.current
-            .date(from: self)!
+        var comps = self
+        comps.hour = 12
+        return Calendar.current.date(from: comps)!
     }
     public func getString(_ dateFormat: String = Defaults.dateFormat) -> String {
         DateFormatter(withDateFormat: dateFormat)
