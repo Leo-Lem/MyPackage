@@ -17,10 +17,8 @@ public struct CountDisplay: View {
                 Text(label).font().padding(.horizontal)
                 Spacer(); Divider()
                 Text("\(count)").font(padd: false)
-                .frame(width: geo.size.width / 4)
+                    .frame(width: geo.size.width / 4)
             }
-            .customBackground()
-            .padding(.horizontal)
         }
         .frame(maxHeight: height)
     }
