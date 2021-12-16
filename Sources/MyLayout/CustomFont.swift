@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-///MARK: standard font
+//MARK: standard font
 public struct CustomFont: ViewModifier {
-    private let font: String, size: CGFloat, padd: Bool
+    let font: String, size: CGFloat, padd: Bool
     
     public func body(content: Content) -> some View {
         content
@@ -20,11 +20,5 @@ public struct CustomFont: ViewModifier {
             )
             .foregroundColor(.primary)
             .padding(padd ? 10 : 0)
-    }
-    
-    public init(_ font: String, size: CGFloat, padd: Bool) {
-        self.font = font
-        self.size = size
-        self.padd = padd
     }
 }

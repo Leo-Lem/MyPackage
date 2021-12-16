@@ -7,7 +7,7 @@
 
 import Foundation
 
-///MARK: Possibility to set dateFormat during initialization of DateFormatter().
+//MARK: Possibility to set dateFormat during initialization of DateFormatter().
 extension DateFormatter {
     public convenience init(withDateFormat dateFormat: String) {
         self.init()

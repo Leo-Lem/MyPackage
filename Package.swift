@@ -10,25 +10,20 @@ let package = Package(
     products: [
         .library(name: "MyPackage",
                  targets: [
-                    "MyDates",
-                    "MyJSONs",
-                    "MyImages",
-                    "MyOthers",
+                    "MyCustomUI",
                     "MyLayout",
-                    "MyCustomUI"
+                    "MyImages",
+                    "MyOthers"
                  ])
     ],
     targets: [
-        .target(name: "MyDates"),
-        .target(name: "MyJSONs"),
-        .target(name: "MyImages"),
-        .target(name: "MyOthers"),
-        .target(name: "MyLayout"),
         .target(name: "MyCustomUI",
                 dependencies: [
-                    "MyDates",
                     "MyOthers",
                     "MyLayout"
-                ])
+                ]),
+        .target(name: "MyLayout"),
+        .target(name: "MyImages"),
+        .target(name: "MyOthers")
     ]
 )

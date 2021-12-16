@@ -9,7 +9,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-///MARK: a JSON file struct for exporting and changing JSON data
+//MARK: a JSON file struct for exporting and changing JSON data
 public struct JSONFile: FileDocument {
     public static var readableContentTypes = [UTType.json]
     public var data: Data

@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-///MARK: standard background image
+//MARK: standard background image
 public struct BackgroundImage: ViewModifier {
-    private let imageName: String, opacity: CGFloat
+    let imageName: String, opacity: CGFloat
     
     public func body(content: Content) -> some View {
         content
@@ -20,10 +20,5 @@ public struct BackgroundImage: ViewModifier {
                     .ignoresSafeArea()
                     .opacity(opacity)
             )
-    }
-    
-    public init(_ imageName: String, opacity: CGFloat) {
-        self.imageName = imageName
-        self.opacity = opacity
     }
 }

@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-///MARK: conditionally hide a view
+//MARK: conditionally hide a view
 public struct ConditionalHidden: ViewModifier {
-    private let hidden: Bool
+    let hidden: Bool
     
     public func body(content: Content) -> some View {
         if hidden {
@@ -17,9 +17,5 @@ public struct ConditionalHidden: ViewModifier {
         } else {
             content
         }
-    }
-    
-    public init(_ hidden: Bool) {
-        self.hidden = hidden
     }
 }

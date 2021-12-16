@@ -7,19 +7,19 @@
 
 import Foundation
 
-///MARK: Methods to set and add to values (date components) of a Date().
+//MARK: Methods to set and add to values (date components) of a Date().
 extension Date {
     public func setValues(_ values: [Int], for components: Array<Calendar.Component>) -> Date {
-        var comps = self.getComponents()
+        var comps = Calendar.current.dateComponents(Set(components), from: self)
         for i in 0..<components.count {
             comps.setValue(values[i], for: components[i])
         }
-        return comps.getDate()
+        return Calendar.current.date(from: comps) ?? Date()
     }
     
     public func addToValues(_ values: [Int], for components: Array<Calendar.Component>) -> Date {
-        var comps = self.getComponents()
+        var comps = Calendar.current.dateComponents(Set(components), from: self)
         for i in 0..<components.count { comps.setValue((comps.value(for: components[i]) ?? 0)+values[i], for: components[i]) }
-        return comps.getDate()
+        return Calendar.current.date(from: comps) ?? Date()
     }
  }
