@@ -18,7 +18,9 @@ public struct SymbolButton: View {
         }
     }
     
-    public init(_ imageName: String, size: CGFloat = LayoutDefaults().textSize, _ action: @escaping () -> Void = {}) {
+    public init(_ imageName: String,
+                size: CGFloat = LayoutDefaults.textSize,
+                _ action: @escaping () -> Void = {}) {
         self.imageName = imageName
         self.size = size
         self.action = action

@@ -23,7 +23,8 @@ public struct CountDisplay: View {
         .frame(maxHeight: height)
     }
     
-    public init(_ label: String, _ count: String, height: CGFloat = LayoutDefaults().rowHeight) {
+    public init(_ label: String, _ count: String,
+                height: CGFloat = LayoutDefaults.rowHeight) {
         self.label = label
         self.count = count
         self.height = height

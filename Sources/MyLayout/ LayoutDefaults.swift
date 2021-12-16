@@ -16,5 +16,6 @@ public class LayoutDefaults {
                       symbolButtonSize: CGFloat = 30,
                       spacing: CGFloat = 20,
                       textFont: String = "Verdana",
-                      textSize: CGFloat = 25
+                      textSize: CGFloat = 25,
+                      backgroundImage: String = "BackgroundImage"
 }
