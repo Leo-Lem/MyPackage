@@ -5,7 +5,6 @@
 //  Created by Leopold Lemmermann on 05.12.21.
 //
 
-
 import PhotosUI
 
 public class ImageSaver: NSObject {

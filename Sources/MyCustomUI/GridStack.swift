@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-///MARK: custom GridStack
 public struct GridStack<Content: View>: View {
     private let rows: Int, columns: Int, spacing: CGFloat, content: (Int, Int) -> Content
     
