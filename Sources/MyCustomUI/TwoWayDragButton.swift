@@ -14,7 +14,7 @@ public struct TwoWayDragButton: View {
     
     @State private var offset = CGSize.zero
     private let edgeAt: CGFloat, size: CGFloat
-    private var actionBorder: CGFloat { 0.8 * edgeAt}
+    private var actionBorder: CGFloat { 0.5 * edgeAt}
     
     public var body: some View {
         HStack {
