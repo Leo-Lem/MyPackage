@@ -10,7 +10,11 @@ import Foundation
 //MARK: Methods to set and add to values (date components) of a Date().
 extension Date {
     public func setValues(_ values: [Int], for components: Array<Calendar.Component>) -> Date {
-        var comps = Calendar.current.dateComponents(Set(components), from: self)
+        var comps = Calendar.current.dateComponents([
+            .era, .year, .yearForWeekOfYear, .quarter, .month,
+            .weekOfMonth, .weekOfYear, .weekday, .weekdayOrdinal,
+            .day, .hour, .minute, .second, .nanosecond
+        ], from: self)
         for i in 0..<components.count {
             comps.setValue(values[i], for: components[i])
         }
@@ -18,7 +22,11 @@ extension Date {
     }
     
     public func addToValues(_ values: [Int], for components: Array<Calendar.Component>) -> Date {
-        var comps = Calendar.current.dateComponents(Set(components), from: self)
+        var comps = Calendar.current.dateComponents([
+            .era, .year, .yearForWeekOfYear, .quarter, .month,
+            .weekOfMonth, .weekOfYear, .weekday, .weekdayOrdinal,
+            .day, .hour, .minute, .second, .nanosecond
+        ], from: self)
         for i in 0..<components.count { comps.setValue((comps.value(for: components[i]) ?? 0)+values[i], for: components[i]) }
         return Calendar.current.date(from: comps) ?? Date()
     }
