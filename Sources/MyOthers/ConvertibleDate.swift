@@ -30,7 +30,7 @@ open class ConvertibleDateSettings {
 
 extension Date: ConvertibleDate {
     public func getDate() -> Date {
-        self
+        self.setValues([12], for: [.hour])
     }
     public func getString(_ dateFormat: String = Defaults.dateFormat) -> String {
         DateFormatter(withDateFormat: dateFormat)
