@@ -10,10 +10,11 @@ import SwiftUI
 //MARK: View extensions for modifier access
 extension View {
     public func font(_ font: String = LayoutDefaults.textFont,
+                     color: Color = .primary,
                      size: CGFloat = LayoutDefaults.textSize,
                      padd: Bool = true) -> some View {
         self.modifier(
-            CustomFont(font: font, size: size, padd: padd))
+            CustomFont(font: font, size: size, color: color, padd: padd))
     }
     
     public func backgroundImage(_ image: String = LayoutDefaults.backgroundImage,
