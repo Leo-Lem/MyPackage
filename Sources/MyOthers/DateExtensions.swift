@@ -17,12 +17,6 @@ extension Calendar.Component: CaseIterable {
 
 //TODO: add a failsafe for non Int Calendar.Components
 extension Date {
-    public var calendar: Calendar { Calendar.current }
-    public var asDateComponents: DateComponents {
-        get { self.calendar.dateComponents(Set(Calendar.Component.allCases), from: self) }
-        set { self = self.calendar.date(from: newValue) ?? self }
-    }
-    
     //MARK: method for setting date component(s) of a date to certain value(s)
     public mutating func setValue(_ value: Int, for component: Calendar.Component) {
         self.asDateComponents.setValue(value, for: component)
@@ -91,8 +85,10 @@ extension Date {
         
         return self.calendar.date(from: dateComponents) ?? self
     }
-    
-    //MARK: Implementing distance method alternative to get the distance in other units
+ }
+
+//MARK: Implementing distance method alternative to get the distance in other units
+extension Date {
     public enum DistanceUnit {
         case second, minute, hour, day, week, month, year
     }
@@ -112,4 +108,39 @@ extension Date {
         
         return distance
     }
- }
+}
+
+//MARK: adding quick access to some date components of a date
+extension Date {
+    public var calendar: Calendar { Calendar.current }
+    
+    public var asDateComponents: DateComponents {
+        get { self.calendar.dateComponents(Set(Calendar.Component.allCases), from: self) }
+        set { self = self.calendar.date(from: newValue) ?? self }
+    }
+    
+    public var day: Int {
+        get { self.asDateComponents.day ?? 1 }
+        set { self.asDateComponents.day = newValue }
+    }
+    
+    public var month: Int {
+        get { self.asDateComponents.month ?? 1 }
+        set { self.asDateComponents.month = newValue }
+    }
+    
+    public var year: Int {
+        get { self.asDateComponents.year ?? 1 }
+        set { self.asDateComponents.year = newValue }
+    }
+    
+    public var hour: Int {
+        get { self.asDateComponents.hour ?? 1 }
+        set { self.asDateComponents.hour = newValue }
+    }
+    
+    public var weekday: Int {
+        get { self.asDateComponents.weekday ?? 1 }
+        set { self.asDateComponents.weekday = newValue }
+    }
+}
