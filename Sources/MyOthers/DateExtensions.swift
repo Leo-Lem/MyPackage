@@ -91,4 +91,25 @@ extension Date {
         
         return self.calendar.date(from: dateComponents) ?? self
     }
+    
+    //MARK: Implementing distance method alternative to get the distance in other units
+    public enum DistanceUnit {
+        case second, minute, hour, day, week, month, year
+    }
+    
+    public func distance(to other: Date, in unit: Date.DistanceUnit) -> Double {
+        var distance: Double = self.distance(to: other)
+        
+        switch unit {
+        case .second: break
+        case .minute: distance /= 60
+        case .hour: distance /= (60 * 60)
+        case .day: distance /= (60 * 60 * 24)
+        case .week: distance /= (60 * 60 * 24 * 7)
+        case .month: distance /= (60 * 60 * 24 * 30.4)
+        case .year: distance /= (60 * 60 * 24 * 365.25)
+        }
+        
+        return distance
+    }
  }
