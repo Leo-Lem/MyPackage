@@ -18,19 +18,13 @@ public protocol ConvertibleDate {
 
 open class ConvertibleDateSettings {
     public static var dateFormat: String = "dd.MM.yyyy"
-    static var dateFormatter: DateFormatter {
-        DateFormatter(withDateFormat: dateFormat)
-    }
-    public static var dateComponents: Set<Calendar.Component> = [
-        .era, .year, .yearForWeekOfYear, .quarter, .month,
-        .weekOfMonth, .weekOfYear, .weekday, .weekdayOrdinal,
-        .day, .hour, .minute, .second, .nanosecond
-    ]
+    static var dateFormatter: DateFormatter { DateFormatter(withDateFormat: dateFormat) }
+    public static var dateComponents: Set<Calendar.Component> = Set(Calendar.Component.allCases)
 }
 
 extension Date: ConvertibleDate {
     public func getDate() -> Date {
-        self.setValues([12], for: [.hour])
+        return self.getDateWithValueSet(12, for: .hour)
     }
     public func getString(_ dateFormat: String = Defaults.dateFormat) -> String {
         DateFormatter(withDateFormat: dateFormat)

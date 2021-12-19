@@ -7,27 +7,88 @@
 
 import Foundation
 
-//MARK: Methods to set and add to values (date components) of a Date().
+extension Calendar.Component: CaseIterable {
+    public static var allCases: [Calendar.Component] {
+        [
+            .era, .year, .month, .day, .hour, .minute, .second, .weekday, .weekdayOrdinal, .quarter, .weekOfMonth, .weekOfYear, .yearForWeekOfYear, .nanosecond, .calendar, .timeZone
+        ]
+    }
+}
+
+//TODO: add a failsafe for non Int Calendar.Components
 extension Date {
-    public func setValues(_ values: [Int], for components: Array<Calendar.Component>) -> Date {
-        var comps = Calendar.current.dateComponents([
-            .era, .year, .yearForWeekOfYear, .quarter, .month,
-            .weekOfMonth, .weekOfYear, .weekday, .weekdayOrdinal,
-            .day, .hour, .minute, .second, .nanosecond
-        ], from: self)
-        for i in 0..<components.count {
-            comps.setValue(values[i], for: components[i])
-        }
-        return Calendar.current.date(from: comps) ?? Date()
+    public var calendar: Calendar { Calendar.current }
+    public var asDateComponents: DateComponents {
+        get { self.calendar.dateComponents(Set(Calendar.Component.allCases), from: self) }
+        set { self = self.calendar.date(from: newValue) ?? self }
     }
     
-    public func addToValues(_ values: [Int], for components: Array<Calendar.Component>) -> Date {
-        var comps = Calendar.current.dateComponents([
-            .era, .year, .yearForWeekOfYear, .quarter, .month,
-            .weekOfMonth, .weekOfYear, .weekday, .weekdayOrdinal,
-            .day, .hour, .minute, .second, .nanosecond
-        ], from: self)
-        for i in 0..<components.count { comps.setValue((comps.value(for: components[i]) ?? 0)+values[i], for: components[i]) }
-        return Calendar.current.date(from: comps) ?? Date()
+    //MARK: method for setting date component(s) of a date to certain value(s)
+    public mutating func setValue(_ value: Int, for component: Calendar.Component) {
+        self.asDateComponents.setValue(value, for: component)
+    }
+    
+    public mutating func setValue(_ values: [Int], for components: [Calendar.Component]) {
+        for i in 0..<components.count {
+            let component = components[i], value = values[i]
+            self.asDateComponents.setValue(value, for: component)
+        }
+    }
+    
+    //non-mutating method returning a component-modified version of self (by setting values)
+    public func getDateWithValueSet(_ value: Int, for component: Calendar.Component) -> Date {
+        var dateComponents = self.asDateComponents
+        
+        dateComponents.setValue(value, for: component)
+        
+        return self.calendar.date(from: dateComponents) ?? self
+    }
+    
+    public func getDateWithValueSet(_ values: [Int], for components: [Calendar.Component]) -> Date {
+        var dateComponents = self.asDateComponents
+        
+        for i in 0..<components.count {
+            let component = components[i], value = values[i]
+            dateComponents.setValue(value, for: component)
+        }
+        
+        return self.calendar.date(from: dateComponents) ?? self
+    }
+    
+    
+    //MARK: method for adding certain value(s) to date component(s) of a date
+    public mutating func addToValue(_ value: Int, for component: Calendar.Component) {
+        let oldValue = self.asDateComponents.value(for: component) ?? 0
+        self.asDateComponents.setValue(oldValue + value, for: component)
+    }
+    
+    public mutating func addToValue(_ values: [Int], for components: [Calendar.Component]) {
+        for i in 0..<components.count {
+            let component = components[i], value = values[i]
+            let oldValue = self.asDateComponents.value(for: component) ?? 0
+            self.asDateComponents.setValue(oldValue + value, for: component)
+        }
+    }
+    
+    //non-mutating method returning a component-modified version of self (by adding to current values)
+    public func getDateWithValueAdded(_ value: Int, for component: Calendar.Component) -> Date {
+        var dateComponents = self.asDateComponents
+        
+        let oldValue = dateComponents.value(for: component) ?? 0
+        dateComponents.setValue(oldValue + value, for: component)
+        
+        return self.calendar.date(from: dateComponents) ?? self
+    }
+    
+    public func getDateWithValueAdded(_ values: [Int], for components: [Calendar.Component]) -> Date {
+        var dateComponents = self.asDateComponents
+        
+        for i in 0..<components.count {
+            let component = components[i], value = values[i]
+            let oldValue = dateComponents.value(for: component) ?? 0
+            dateComponents.setValue(oldValue + value, for: component)
+        }
+        
+        return self.calendar.date(from: dateComponents) ?? self
     }
  }
