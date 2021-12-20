@@ -102,8 +102,8 @@ extension Date {
         case .hour: distance /= (60 * 60)
         case .day: distance /= (60 * 60 * 24)
         case .week: distance /= (60 * 60 * 24 * 7)
-        case .month: distance /= (60 * 60 * 24 * 30.4)
-        case .year: distance /= (60 * 60 * 24 * 365.25)
+        case .month: distance /= (60 * 60 * 24 * self.asDateComponents.daysInMonth)
+        case .year: distance /= (60 * 60 * 24 * self.asDateComponents.daysInYear)
         }
         
         return distance
