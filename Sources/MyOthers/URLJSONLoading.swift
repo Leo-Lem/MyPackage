@@ -16,32 +16,26 @@ public class URLJSONLoader<T: Decodable> {
         self.decoder = decoder
     }
     
-    private enum DataLoadingError: Error {
-        case fetching(_ description: String?), decoding(_ description: String?)
+    public enum LoadingError: Error {
+        case url(_ description: String?), fetching(_ description: String?), decoding(_ description: String?)
     }
     
-    //MARK: loading the data from a URL-string and handling the errors
-    public func load() async -> T? {
-        do {
-            let data = try await fetch()
-            return try decode(data)
-        } catch DataLoadingError.fetching(let description) {
-            print("Fetching Error: \(description ?? "Unknown")")
-        } catch DataLoadingError.decoding(let description) {
-            print("Decoding Error: \(description ?? "Unknown")")
-        } catch {
-            print("Unknown Error")
-        }
-        return nil
+    //MARK: loading the data from a URL-string
+    public func load() async throws -> T? {
+        let data = try await fetch()
+        return try decode(data)
     }
     
     //MARK: fetching and decoding the data
     private func fetch() async throws -> Data {
         do {
-            let data = try await URLSession.shared.data(from: self.url!).0
+            guard let url = self.url else {
+                throw LoadingError.url("Bad URL: \(urlString)")
+            }
+            let data = try await URLSession.shared.data(from: url).0
             return data
         } catch {
-            throw DataLoadingError.fetching(error.localizedDescription)
+            throw LoadingError.fetching(error.localizedDescription)
         }
     }
     
@@ -50,7 +44,7 @@ public class URLJSONLoader<T: Decodable> {
             let decodedData = try decoder.decode(T.self, from: data)
             return decodedData
         } catch {
-            throw DataLoadingError.decoding(error.localizedDescription)
+            throw LoadingError.decoding(error.localizedDescription)
         }
     }
 }
