@@ -7,7 +7,7 @@
 
 import Foundation
 
-class JSONDataLoadingFromURL {
+class URLJSONLoading {
     private enum DataLoadingError: Error {
         case invalidURL, fetching(_ description: String?), decoding(_ description: String?)
     }
