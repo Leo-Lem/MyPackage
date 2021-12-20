@@ -7,13 +7,25 @@
 
 import Foundation
 
-public class URLJSONLoading {
+public class URLJSONLoader<T: Decodable> {
+    public let urlString: String, decoder: JSONDecoder, type: T
+    private var url: URL? { URL(string: urlString) }
+    
+    public init(loadFrom urlString: String, decoder: JSONDecoder = JSONDecoder(), type: T) {
+        self.urlString = urlString
+        self.decoder = decoder
+        self.type = type
+    }
+    
+    private enum DataLoadingError: Error {
+        case fetching(_ description: String?), decoding(_ description: String?)
+    }
+    
     //MARK: loading the data from a URL-string and handling the errors
-    public func loadHandled<T: Decodable>(from string: String, to type: T, decoder: JSONDecoder = JSONDecoder()) async -> T? {
+    public func load() async -> T? {
         do {
-            return try await load(from: string, to: type, decoder: decoder)
-        } catch DataLoadingError.invalidURL {
-            print("Invalid URL")
+            let data = try await fetch()
+            return try decode(data)
         } catch DataLoadingError.fetching(let description) {
             print("Fetching Error: \(description ?? "Unknown")")
         } catch DataLoadingError.decoding(let description) {
@@ -24,38 +36,20 @@ public class URLJSONLoading {
         return nil
     }
     
-    //MARK: loading the data from a URL-string
-    public func load<T: Decodable>(from urlString: String, to type: T, decoder: JSONDecoder = JSONDecoder()) async throws -> T {
-        let url = try getURL(from: urlString)
-        let data = try await fetch(from: url)
-        return try decode(data, to: type, decoder: decoder)
-    }
-    
-    //MARK: more basic private methods
-    private enum DataLoadingError: Error {
-        case invalidURL, fetching(_ description: String?), decoding(_ description: String?)
-    }
-    
-    private func getURL(from string: String) throws -> URL {
-        if let url = URL(string: string) {
-            return url
-        } else {
-            throw DataLoadingError.invalidURL
-        }
-    }
-    
-    private func fetch(from url: URL) async throws -> Data {
+    //MARK: fetching and decoding the data
+    private func fetch() async throws -> Data {
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
+            let data = try await URLSession.shared.data(from: self.url!).0
             return data
         } catch {
             throw DataLoadingError.fetching(error.localizedDescription)
         }
     }
     
-    private func decode<T: Decodable>(_ data: Data, to type: T, decoder: JSONDecoder) throws -> T {
+    private func decode(_ data: Data) throws -> T {
         do {
-            return try decoder.decode(T.self, from: data)
+            let decodedData = try decoder.decode(T.self, from: data)
+            return decodedData
         } catch {
             throw DataLoadingError.decoding(error.localizedDescription)
         }
