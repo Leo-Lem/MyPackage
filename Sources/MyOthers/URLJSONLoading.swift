@@ -8,13 +8,12 @@
 import Foundation
 
 public class URLJSONLoader<T: Decodable> {
-    public let urlString: String, decoder: JSONDecoder, object: T
+    public let urlString: String, decoder: JSONDecoder
     private var url: URL? { URL(string: urlString) }
     
-    public init(urlString: String, decoder: JSONDecoder = JSONDecoder(), object: T) {
+    public init(urlString: String, decoder: JSONDecoder = JSONDecoder()) {
         self.urlString = urlString
         self.decoder = decoder
-        self.object = object
     }
     
     private enum DataLoadingError: Error {
