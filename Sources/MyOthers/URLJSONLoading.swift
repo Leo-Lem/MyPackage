@@ -11,7 +11,7 @@ public class URLJSONLoader<T: Decodable> {
     public let urlString: String, decoder: JSONDecoder, type: T
     private var url: URL? { URL(string: urlString) }
     
-    public init(loadFrom urlString: String, decoder: JSONDecoder = JSONDecoder(), type: T) {
+    public init(urlString: String, decoder: JSONDecoder = JSONDecoder(), type: T) {
         self.urlString = urlString
         self.decoder = decoder
         self.type = type
