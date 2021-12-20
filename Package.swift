@@ -12,7 +12,6 @@ let package = Package(
                  targets: [
                     "MyCustomUI",
                     "MyLayout",
-                    "MyImages",
                     "MyOthers"
                  ])
     ],
@@ -23,7 +22,6 @@ let package = Package(
                     "MyLayout"
                 ]),
         .target(name: "MyLayout"),
-        .target(name: "MyImages"),
         .target(name: "MyOthers")
     ]
 )
