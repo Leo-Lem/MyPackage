@@ -14,7 +14,7 @@ public struct BackgroundImage: ViewModifier {
     public func body(content: Content) -> some View {
         content
             .background(
-                Image(imageName)
+                Image(decorative: imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()

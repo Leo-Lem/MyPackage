@@ -54,6 +54,7 @@ public struct TwoWayDragButton: View {
             Spacer(minLength: edgeAt)
         }
         .scaledToFit()
+        .accessibilityElement()
     }
     
     public init(symbols: [String] = [],
