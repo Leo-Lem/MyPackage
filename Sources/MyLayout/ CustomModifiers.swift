@@ -31,4 +31,8 @@ extension View {
     public func cornerRadius(_ radius: CGFloat = LayoutDefaults.cornerRadius, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners) )
     }
+    
+    public func webLink(url: URL) -> some View {
+        self.modifier(WebLink(url: url))
+    }
 }
