@@ -9,7 +9,7 @@ import CoreData
 
 //MARK: makes initializing core data objects without a view context a bit simpler
 extension NSManagedObject {
-    convenience init(context: NSManagedObjectContext?) {
+    public convenience init(context: NSManagedObjectContext?) {
         if let context = context {
             self.init(context: context)
         } else {
