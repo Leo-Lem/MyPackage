@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MyBackend
+import MyOthers
 
 public struct ButtonToolbar: ToolbarContent {
     private let leftLabel: String, rightLabel: String

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import MyBackend
+import MyOthers
 
 public struct TwoWayDragButton: View {
     let mainSymbol: String, leftSymbol: String, rightSymbol: String
