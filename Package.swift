@@ -10,15 +10,15 @@ let package = Package(
     products: [
         .library(name: "MyPackage",
                  targets: [
-                    "MyBackend",
+                    "MyOthers",
                     "MyCustomUI"
                  ])
     ],
     targets: [
         .target(name: "MyCustomUI",
                 dependencies: [
-                    "MyBackend"
+                    "MyOthers"
                 ]),
-        .target(name: "MyBackend")
+        .target(name: "MyOthers")
     ]
 )
