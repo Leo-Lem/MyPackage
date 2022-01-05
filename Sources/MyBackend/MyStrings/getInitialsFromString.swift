@@ -15,8 +15,9 @@ extension PersonNameComponentsFormatter {
 }
 
 public func getInitials(for string: String) -> String {
-    if let components = PersonNameComponentsFormatter().personNameComponents(from: string) {
-        return PersonNameComponentsFormatter(style: .abbreviated).string(from: components)
+    typealias Formatter = PersonNameComponentsFormatter
+    if let components = Formatter().personNameComponents(from: string) {
+        return Formatter(style: .abbreviated).string(from: components)
     } else {
         return "##"
     }

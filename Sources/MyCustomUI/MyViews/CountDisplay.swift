@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MyLayout
 
 public struct CountDisplay: View {
     private let label: String, count: String, height: CGFloat
@@ -14,9 +13,15 @@ public struct CountDisplay: View {
     public var body: some View {
         GeometryReader { geo in
             HStack {
-                Text(label).font().padding(.horizontal)
-                Spacer(); Divider()
-                Text("\(count)").font(padd: false)
+                Text(label)
+                    .font()
+                    .padding(.horizontal)
+                
+                Spacer()
+                Divider()
+                
+                Text("\(count)")
+                    .font(padd: false)
                     .frame(width: geo.size.width / 4)
             }
         }

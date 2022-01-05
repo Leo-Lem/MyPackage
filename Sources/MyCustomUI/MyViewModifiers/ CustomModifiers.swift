@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//MARK: View extensions for modifier access
+//MARK: view extensions for modifier access
 extension View {
     public func font(_ font: String = LayoutDefaults.textFont,
                      color: Color = .primary,
@@ -34,5 +34,9 @@ extension View {
     
     public func webLink(url: URL) -> some View {
         self.modifier(WebLink(url: url))
+    }
+    
+    public func disabled(_ disabled: Bool, on: Color, off: Color = .gray) -> some View {
+        self.modifier(DisabledWithColor(disabled: disabled, on: on, off: off))
     }
 }
