@@ -27,7 +27,7 @@ public struct KVSHandler {
         if let object = cloudDefaults?.object(forKey: key) {
             return object
         } else {
-            return localDefaults.object(forKey: key)
+            return localDefaults?.object(forKey: key)
         }
     }
 }
