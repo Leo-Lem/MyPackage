@@ -8,29 +8,29 @@
 import Foundation
 
 @propertyWrapper
-struct Lowercased<Value: StringProtocol> {
-    var value: Value
+public struct Lowercased<Value: StringProtocol> {
+    public var value: Value
     
-    var wrappedValue: Value {
+    public var wrappedValue: Value {
         get { value }
         set { self.value = Value(stringLiteral: newValue.lowercased()) }
     }
     
-    init(wrappedValue: Value) {
+    public init(wrappedValue: Value) {
         self.value = Value(stringLiteral: wrappedValue.lowercased())
     }
 }
 
 @propertyWrapper
-struct Uppercased<Value: StringProtocol> {
-    var value: Value
+public struct Uppercased<Value: StringProtocol> {
+    public var value: Value
     
-    var wrappedValue: Value {
+    public var wrappedValue: Value {
         get { value }
         set { self.value = Value(stringLiteral: newValue.uppercased()) }
     }
     
-    init(wrappedValue: Value) {
+    public init(wrappedValue: Value) {
         self.value = Value(stringLiteral: wrappedValue.lowercased())
     }
 }

@@ -7,7 +7,7 @@
 
 import Combine
 
-protocol ViewModelProtocol: AnyObject {
+public protocol ViewModelProtocol: AnyObject {
     associatedtype State
     associatedtype Event
     
@@ -19,6 +19,6 @@ protocol ViewModelProtocol: AnyObject {
 }
 
 extension ViewModelProtocol {
-    func send(event: Event) { input.send(event) }
-    static func feedbackUserInput(input: AnyPublisher<Event, Never>) -> Feedback<State, Event> { Feedback { _ in input } }
+    public func send(event: Event) { input.send(event) }
+    public static func feedbackUserInput(input: AnyPublisher<Event, Never>) -> Feedback<State, Event> { Feedback { _ in input } }
 }
