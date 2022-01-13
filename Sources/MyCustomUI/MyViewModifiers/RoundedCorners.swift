@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if canImport(UIKit)
 //MARK: round only specific corners of a view
 public struct RoundedCorner: Shape {
     let radius: CGFloat, corners: UIRectCorner
@@ -16,3 +17,4 @@ public struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
+#endif

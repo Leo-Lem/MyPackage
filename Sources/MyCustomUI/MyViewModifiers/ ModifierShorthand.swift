@@ -12,4 +12,7 @@ extension View {
     public func animation<V: Equatable>(_ value: V) -> some View {
         self.animation(.default, value: value)
     }
+    
+    func eraseToAnyView() -> AnyView { AnyView(self) }
+    func embedInNavigation() -> some View { NavigationView(content: { self }) }
 }

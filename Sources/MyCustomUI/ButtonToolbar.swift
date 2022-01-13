@@ -8,6 +8,7 @@
 import SwiftUI
 import MyOthers
 
+#if os(iOS)
 public struct ButtonToolbar: ToolbarContent {
     private let leftLabel: String, rightLabel: String
     private let leftAction: () -> Void, rightAction: () -> Void
@@ -53,3 +54,4 @@ struct ButtonToolbar_Previews: PreviewProvider {
         }
     }
 }
+#endif

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import PhotosUI
-
+#if canImport(UIKit)
 public struct ImagePicker: UIViewControllerRepresentable {
     @Binding private var image: UIImage?
     
@@ -49,5 +49,4 @@ public struct ImagePicker: UIViewControllerRepresentable {
     
     public typealias UIViewControllerType = PHPickerViewController
 }
-
-
+#endif

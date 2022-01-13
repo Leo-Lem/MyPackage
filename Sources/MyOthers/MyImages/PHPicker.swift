@@ -7,6 +7,7 @@
 
 import PhotosUI
 
+#if canImport(UIKit)
 extension PHPickerViewController {
     public convenience init(configuration: PHPickerConfiguration, delegate: PHPickerViewControllerDelegate) {
         self.init(configuration: configuration)
@@ -20,3 +21,4 @@ extension PHPickerConfiguration {
         self.filter = filter
     }
 }
+#endif

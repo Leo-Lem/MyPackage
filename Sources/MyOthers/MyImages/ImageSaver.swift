@@ -7,6 +7,7 @@
 
 import PhotosUI
 
+#if canImport(UIKit)
 public class ImageSaver: NSObject {
     private var successHandler: (() -> Void)?
     private var errorHandler: ((Error) -> Void)?
@@ -15,6 +16,7 @@ public class ImageSaver: NSObject {
         self.successHandler = successHandler
         self.errorHandler = errorHandler
     }
+    
     public func writeToPhotoAlbum(image: UIImage) {
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveComplete), nil)
     }
@@ -27,3 +29,4 @@ public class ImageSaver: NSObject {
         }
     }
 }
+#endif
