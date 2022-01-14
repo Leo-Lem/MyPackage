@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct NumberOverUnitLabel<N: CustomStringConvertible & CVarArg>: View {
-    let number: N, unit: LocalizationUnit
+public struct NumberOverUnitLabel<N: CustomStringConvertible & CVarArg>: View {
+    public let number: N, unit: LocalizationUnit
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text("\(number.description)").font(.headline)
             Text(localizeUnit(number, label: unit) ).font(.caption2)

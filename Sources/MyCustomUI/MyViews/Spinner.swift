@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct Spinner: View {
-    let size: CGSize?
+public struct Spinner: View {
+    private let size: CGSize?
     
-    var body: some View {
+    public var body: some View {
         circle
             .trim(from: 0.1, to: 1)
             .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
@@ -32,8 +32,8 @@ struct Spinner: View {
 }
 
 extension Spinner {
-    enum Size { case tiny, small, medium, large, dynamic }
-    init(size: Size) {
+    public enum Size { case tiny, small, medium, large, dynamic }
+    public init(size: Size) {
         switch size {
         case .large: self.size = CGSize(width: 400, height: 400)
         case .medium: self.size = CGSize(width: 200, height: 200)
