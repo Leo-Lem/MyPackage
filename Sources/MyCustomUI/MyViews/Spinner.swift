@@ -12,8 +12,6 @@ public struct Spinner: View {
     
     public var body: some View {
         circle
-            .trim(from: 0.1, to: 1)
-            .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
             .shadow(color: .primary, radius: 3)
             .rotationEffect(rotation)
             .onReceive(timer) { _ in
@@ -24,10 +22,20 @@ public struct Spinner: View {
     @State private var rotation = Angle.degrees(270)
     private let timer = Timer.publish(every: 0.2, on: .main, in: .common).autoconnect()
     
-    private var circle: Circle {
-        size != nil ?
-            Circle().frame(width: size!.width, height: size!.height) as! Circle :
-            Circle()
+    private var circle: some View {
+        return Group {
+            if size != nil {
+                Circle()
+                    .trim(from: 0.05, to: 1)
+                    .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+                    .frame(width: size!.width, height: size!.height)
+            } else {
+                Circle()
+                    .trim(from: 0.05, to: 1)
+                    .stroke(style: StrokeStyle(lineWidth: 5, lineCap: .round))
+            }
+        }
+        .eraseToAnyView()
     }
 }
 
