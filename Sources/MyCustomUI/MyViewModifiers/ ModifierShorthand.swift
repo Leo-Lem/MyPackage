@@ -13,6 +13,6 @@ extension View {
         self.animation(.default, value: value)
     }
     
-    func eraseToAnyView() -> AnyView { AnyView(self) }
-    func embedInNavigation() -> some View { NavigationView(content: { self }) }
+    public func eraseToAnyView() -> AnyView { AnyView(self) }
+    public func embedInNavigation() -> some View { NavigationView(content: { self }) }
 }
