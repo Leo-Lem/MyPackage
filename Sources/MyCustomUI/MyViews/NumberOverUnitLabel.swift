@@ -16,6 +16,11 @@ public struct NumberOverUnitLabel<N: CustomStringConvertible & CVarArg>: View {
             Text(localizeUnit(number, label: unit) ).font(.caption2)
         }
     }
+    
+    public init(_ number: N, _ unit: LocalizationUnit) {
+        self.number = number
+        self.unit = unit
+    }
 }
 
 //MARK: - Previews
