@@ -26,6 +26,6 @@ public struct NumberOverUnitLabel<N: CustomStringConvertible & CVarArg>: View {
 //MARK: - Previews
 struct NumberOverUnitLabel_Previews: PreviewProvider {
     static var previews: some View {
-        NumberOverUnitLabel(number: 1, unit: .points)
+        NumberOverUnitLabel(1, .points)
     }
 }
