@@ -12,14 +12,15 @@ let package = Package(
         .library(name: "MyPackage",
                  targets: [
                     "MyOthers",
-                    "MyCustomUI"
+                    "MyCustomUI",
+                    "MyDates",
+                    "MyStorage"
                  ])
     ],
     targets: [
-        .target(name: "MyCustomUI",
-                dependencies: [
-                    "MyOthers"
-                ]),
+        .target(name: "MyCustomUI", dependencies: ["MyOthers"]),
+        .target(name: "MyDates", dependencies: ["MyOthers"]),
+        .target(name: "MyStorage"),
         .target(name: "MyOthers")
     ]
 )

@@ -16,9 +16,4 @@ extension JSONDecoder {
         self.init()
         self.userInfo[.context] = context
     }
-    
-    public convenience init(context: NSManagedObjectContext , dateFormat: String) {
-        self.init(context: context)
-        self.dateDecodingStrategy = .formatted(DateFormatter(withDateFormat: dateFormat))
-    }
 }
