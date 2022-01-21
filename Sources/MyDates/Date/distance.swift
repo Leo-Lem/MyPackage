@@ -14,4 +14,16 @@ public extension Date {
             .distance(to: other)
             .convert(to: unit)
     }
+    
+    func distance(
+        for timespan: Calendar.Component,
+        in unit: Calendar.Component = .day,
+        cal: Calendar = .current
+    ) -> Int? {
+        if timespan == .weekOfYear && unit == .day { return 7 }
+        
+        let range = cal.range(of: unit, in: timespan, for: self)
+        
+        return range?.max()
+    }
 }
