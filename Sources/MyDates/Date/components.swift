@@ -7,30 +7,39 @@
 
 import Foundation
 
-//MARK: quick access to some date components of a date
+//MARK: properties for quickly accessing start and end of different intervals
 public extension Date {
-    var day: Int {
-        get { self.asDateComponents.day ?? 1 }
-        set { self.asDateComponents.day = newValue }
+    func startOf(_ comp: Calendar.Component, cal: Calendar = .current) -> Date? {
+        var comps: Set<Calendar.Component> = [.calendar]
+        
+        switch comp {
+        case .weekOfYear: comps.formUnion([.yearForWeekOfYear, .weekOfYear])
+        case .month: comps.formUnion([.year, .month])
+        case .year: comps.formUnion([.year])
+        default: return nil
+        }
+        
+        return cal.dateComponents(comps, from: self).date
     }
     
-    var month: Int {
-        get { self.asDateComponents.month ?? 1 }
-        set { self.asDateComponents.month = newValue }
+    func endOf(_ comp: Calendar.Component, cal: Calendar = .current) -> Date? {
+        guard
+            let start = startOf(comp),
+            let days = daysIn(comp, for: start, cal: cal)
+        else { return nil }
+        
+        return cal.date(byAdding: DateComponents(day: days - 1), to: start)
     }
     
-    var hour: Int {
-        get { self.asDateComponents.hour ?? 1 }
-        set { self.asDateComponents.hour = newValue }
+    func startOfDay(cal: Calendar = .current) -> Date? {
+        cal.startOfDay(for: self)
     }
     
-    var year: Int {
-        get { self.asDateComponents.year ?? 1 }
-        set { self += TimeInterval(year - newValue, unit: .year) }
-    }
-    
-    var weekday: Int {
-        get { self.asDateComponents.weekday ?? 1 }
-        set { self += TimeInterval(weekday - newValue, unit: .day) }
+    func daysIn(_ comp: Calendar.Component, for date: Date, cal: Calendar = .current) -> Int? {
+        if comp == .weekOfYear { return 7 }
+        
+        let range = cal.range(of: .day, in: comp, for: date)
+        
+        return range?.max()
     }
 }
