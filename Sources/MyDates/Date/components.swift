@@ -7,8 +7,18 @@
 
 import Foundation
 
-//MARK: properties for quickly accessing start and end of different intervals
 public extension Date {
+    func enumerate(_ comp1: Calendar.Component, in comp2: Calendar.Component, cal: Calendar = .current) -> [Date]? {
+        guard
+            let start = startOf(comp2),
+            let end = endOf(comp2)
+        else { return nil }
+        
+        return Array(
+            stride(from: start, to: end + TimeInterval(1, unit: comp1), by: TimeInterval(1, unit: comp1))
+        )
+    }
+    
     func startOf(_ comp: Calendar.Component, cal: Calendar = .current) -> Date? {
         var comps: Set<Calendar.Component> = [.calendar]
         
