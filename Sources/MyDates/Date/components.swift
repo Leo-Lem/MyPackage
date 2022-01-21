@@ -54,7 +54,7 @@ public extension Date {
     func endOf(_ comp: Calendar.Component, cal: Calendar = .current) -> Date? {
         guard
             let start = startOf(comp),
-            let days = daysIn(comp, for: start, cal: cal)
+            let days = daysIn(comp, cal: cal)
         else { return nil }
         
         return cal.date(byAdding: DateComponents(day: days - 1), to: start)
@@ -64,10 +64,10 @@ public extension Date {
         cal.startOfDay(for: self)
     }
     
-    func daysIn(_ comp: Calendar.Component, for date: Date, cal: Calendar = .current) -> Int? {
+    func daysIn(_ comp: Calendar.Component, cal: Calendar = .current) -> Int? {
         if comp == .weekOfYear { return 7 }
         
-        let range = cal.range(of: .day, in: comp, for: date)
+        let range = cal.range(of: .day, in: comp, for: self)
         
         return range?.max()
     }
