@@ -12,6 +12,7 @@ public extension Date {
         var comps: Set<Calendar.Component> = [.calendar]
         
         switch comp {
+        case .day: comps.formUnion([.day, .month, .year])
         case .weekOfYear: comps.formUnion([.yearForWeekOfYear, .weekOfYear])
         case .month: comps.formUnion([.year, .month])
         case .year: comps.formUnion([.year])
@@ -27,10 +28,8 @@ public extension Date {
             let days = distance(for: comp, cal: cal)
         else { return nil }
         
-        return cal.date(byAdding: DateComponents(day: days - 1), to: start)
+        return cal.date(byAdding: DateComponents(day: days, second: -1), to: start)
     }
 
-    func startOfDay(cal: Calendar = .current) -> Date? {
-        cal.startOfDay(for: self)
-    }
+    func startOfDay(cal: Calendar = .current) -> Date? { cal.startOfDay(for: self) }
 }

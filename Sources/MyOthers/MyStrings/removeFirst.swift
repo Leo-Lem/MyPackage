@@ -7,9 +7,9 @@
 
 import Foundation
 
-extension String {
-    public enum MutatingError: Error { case noMatch }
-    public mutating func removeFirst(where expression: (Self.Element) -> Bool) throws {
+public extension String {
+    enum MutatingError: Error { case noMatch }
+    mutating func removeFirst(where expression: (Self.Element) -> Bool) throws {
         if let index = self.firstIndex(where: expression) {
             self.remove(at: index)
         } else {
@@ -17,7 +17,7 @@ extension String {
         }
     }
 
-    public mutating func removeFirst(char: String.Element) throws {
+    mutating func removeFirst(char: String.Element) throws {
         if let index = self.firstIndex(of: char) {
             self.remove(at: index)
         } else {

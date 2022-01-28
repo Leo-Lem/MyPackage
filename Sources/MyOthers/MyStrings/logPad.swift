@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension String {
-    public func logPadded() -> String {
+public extension String {
+    func paddedForPrint() -> String {
         """
         ----------------------------------
 
@@ -16,5 +16,9 @@ extension String {
 
         ----------------------------------
         """
+    }
+    
+    mutating func padForPrint() {
+        self = self.paddedForPrint()
     }
 }

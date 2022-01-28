@@ -33,8 +33,8 @@ public extension Date {
     ) -> [Date]? {
         Array(stride(
             from: start,
-            to: end + TimeInterval(1, unit: interval),
-            by: TimeInterval(1, unit: interval)
+            to: end,
+            by: TimeInterval(1, interval)
         ))
     }
 }

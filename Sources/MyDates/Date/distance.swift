@@ -20,10 +20,10 @@ public extension Date {
         in unit: Calendar.Component = .day,
         cal: Calendar = .current
     ) -> Int? {
-        if timespan == .weekOfYear && unit == .day { return 7 }
-        
-        let range = cal.range(of: unit, in: timespan, for: self)
-        
-        return range?.max()
+        switch (timespan, unit) {
+        case (.weekOfYear, .day): return 7
+        case (.day, .day): return 1
+        default: return cal.range(of: unit, in: timespan, for: self)?.max()
+        }
     }
 }

@@ -7,18 +7,20 @@
 
 import Foundation
 
-extension PersonNameComponentsFormatter {
-    public convenience init(style: Style) {
+public extension PersonNameComponentsFormatter {
+    convenience init(style: Style) {
         self.init()
         self.style = style
     }
 }
 
-public func getInitials(for string: String) -> String {
-    typealias Formatter = PersonNameComponentsFormatter
-    if let components = Formatter().personNameComponents(from: string) {
-        return Formatter(style: .abbreviated).string(from: components)
-    } else {
-        return "##"
+public extension String {
+    func getInitials() -> String {
+        typealias Formatter = PersonNameComponentsFormatter
+        if let components = Formatter().personNameComponents(from: self) {
+            return Formatter(style: .abbreviated).string(from: components)
+        } else {
+            return "##"
+        }
     }
 }

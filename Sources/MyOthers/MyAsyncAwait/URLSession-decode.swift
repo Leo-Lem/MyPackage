@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension URLSession {
+public extension URLSession {
     func decode<T: Decodable>(
         _ type: T.Type = T.self,
         from url: URL,
