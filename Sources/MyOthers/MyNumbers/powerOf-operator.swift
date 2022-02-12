@@ -9,5 +9,5 @@ import Foundation
 
 infix operator ^: DefaultPrecedence
 func ^<N: BinaryInteger>(num: N, power: N) -> Double {
-    return pow(Double(num), Double(power))
+    pow(Double(num), Double(power))
 }

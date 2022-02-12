@@ -3,31 +3,31 @@
 import PackageDescription
 import Foundation
 
-
+//MARK: - defining the library names
 enum TargetID: String, CaseIterable {
     case ui = "MySwiftUI",
          dates = "MyDates",
          others = "MyOthers",
-         storage = "MyStorage",
-         locale = "MyLocalization"
+         storage = "MyStorage"
     
     var name: String { self.rawValue }
     var tests: String { "\(self.name)Tests" }
 }
 
+//MARK: - defining the targets
 private let name = "MyPackage"
 private let targets: [Target] = [
-    .target(.ui, dependencies: [.others, .locale]),
+    .target(.ui, dependencies: [.others, .dates]),
     .target(.others),
     .target(.dates, dependencies: .others),
-    .target(.storage),
-    .target(.locale),
+    .target(.storage)
 ]
 
 private let testTargets: [Target] = [
     .testTarget(.dates, dependencies: .others)
 ]
 
+//MARK: - defining the actual package
 let package = Package(
     name: name,
     platforms: [.iOS(.v15), .macOS(.v12)],
@@ -35,6 +35,7 @@ let package = Package(
     targets: targets + testTargets
 )
 
+//MARK: - simpler target declaration
 fileprivate extension Target {
     static func target(_ id: TargetID, dependencies: [TargetID] = []) -> Target {
         .target(name: id.name, dependencies: dependencies.map(\.name).map(Dependency.init))

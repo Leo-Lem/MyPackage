@@ -8,6 +8,34 @@
 import SwiftUI
 
 //MARK: - some custom initializers for actions often used
+public extension Button where Label == Text {
+    init<S: StringProtocol>(_ title: S, toggle bool: Binding<Bool>) {
+        self.init(title, action: { bool.wrappedValue.toggle() })
+    }
+    
+    init<S: StringProtocol>(_ title: S, true bool: Binding<Bool>) {
+        self.init(title, action: { bool.wrappedValue = true })
+    }
+    
+    init<S: StringProtocol>(_ title: S, false bool: Binding<Bool>) {
+        self.init(title, action: { bool.wrappedValue = false })
+    }
+}
+
+public extension Button {
+    init(toggle bool: Binding<Bool>, label: @escaping () -> Label) {
+        self.init(action: { bool.wrappedValue.toggle() }, label: label)
+    }
+
+    init(true bool: Binding<Bool>, label: @escaping () -> Label) {
+        self.init(action: { bool.wrappedValue = true }, label: label)
+    }
+
+    init(false bool: Binding<Bool>, label: @escaping () -> Label) {
+        self.init(action: { bool.wrappedValue = false }, label: label)
+    }
+}
+
 public extension Button where Label == Image {
     init(systemImage: String, action: @escaping () -> Void)  {
         self.init(action: action) { Image(systemName: systemImage) }
@@ -23,19 +51,5 @@ public extension Button where Label == Image {
 
     init(systemImage: String, false bool: Binding<Bool>) {
         self.init(systemImage: systemImage, action: { bool.wrappedValue = false })
-    }
-}
-
-public extension Button {
-    init(toggle bool: Binding<Bool>, label: @escaping () -> Label) {
-        self.init(action: { bool.wrappedValue.toggle() }, label: label)
-    }
-
-    init(true bool: Binding<Bool>, label: @escaping () -> Label) {
-        self.init(action: { bool.wrappedValue = true }, label: label)
-    }
-
-    init(false bool: Binding<Bool>, label: @escaping () -> Label) {
-        self.init(action: { bool.wrappedValue = false }, label: label)
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 public extension Date {
+    
     func enumerate(
         _ interval: Calendar.Component = .day,
         in span: Calendar.Component,
@@ -15,26 +16,18 @@ public extension Date {
     ) -> [Date]? {
         guard let start = startOf(span), let end = endOf(span) else { return nil }
         
-        return enumerate(interval, from: start, to: end, cal: cal)
+        return (start...end).enumerate(interval, cal: cal)
     }
+    
+}
+
+public extension ClosedRange where Bound == Date {
     
     func enumerate(
         _ interval: Calendar.Component = .day,
-        in range: ClosedRange<Date>,
         cal: Calendar = .current
-    ) -> [Date]? {
-        enumerate(interval, from: range.lowerBound, to: range.upperBound, cal: cal)
+    ) -> [Date] {
+        Array(stride(from: self.lowerBound, through: self.upperBound, by: TimeInterval(1, interval)))
     }
     
-    func enumerate(
-        _ interval: Calendar.Component = .day,
-        from start: Date, to end: Date,
-        cal: Calendar = .current
-    ) -> [Date]? {
-        Array(stride(
-            from: start,
-            to: end,
-            by: TimeInterval(1, interval)
-        ))
-    }
 }

@@ -8,6 +8,4 @@
 import Foundation
 
 postfix operator ~
-public postfix func ~ (string: String) -> String {
-    NSLocalizedString(string, comment: "")
-}
+public postfix func ~ (string: String) -> String { NSLocalizedString(string, comment: "") }
