@@ -85,11 +85,11 @@ class MyDatesTests: XCTestCase {
         let acc = 0.005
         
         comps.compatible.forEach { comp in
-            XCTAssertEqual(start.distance(to: end, in: comp)!, interval * testData.operand[comp]!, accuracy: acc)
+            XCTAssertEqual(start.distance(to: end, unit: comp)!, interval * testData.operand[comp]!, accuracy: acc)
         }
         
         
-        comps.incompatible.forEach { comp in XCTAssertNil(start.distance(to: end, in: comp)) }
+        comps.incompatible.forEach { comp in XCTAssertNil(start.distance(to: end, unit: comp)) }
     }
     
     //MARK: - enumerating dates
