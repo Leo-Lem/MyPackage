@@ -22,6 +22,5 @@ public struct JSONFile: FileDocument {
     
     public func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         FileWrapper(regularFileWithContents: self.data)
-        
     }
 }

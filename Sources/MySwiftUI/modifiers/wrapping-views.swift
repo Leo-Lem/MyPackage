@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-//MARK: - wraps the view in a link to a given url
+//MARK: - wraps the view
 public extension View {
-    func link(to url: URL) -> some View { Link(destination: url) { self } }
+    func link(to url: URL) -> Link<Self> { Link(destination: url) { self } }
     func eraseToAnyView() -> AnyView { AnyView(self) }
-    func embedInNavigation() -> some View { NavigationView(content: { self }) }
+    func embedInNavigation() -> NavigationView<Self> { NavigationView(content: { self }) }
 }
 
 //MARK: - Previews
