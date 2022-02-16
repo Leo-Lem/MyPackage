@@ -10,21 +10,33 @@ enum TargetID: String, CaseIterable {
          others = "MyOthers",
          storage = "MyStorage"
     
-    var name: String { self.rawValue }
+    var name: String { rawValue }
     var tests: String { "\(self.name)Tests" }
+}
+
+enum SourceID: String, CaseIterable {
+    case source
+    
+    var name: String { rawValue }
+}
+
+enum ResourceID: String, CaseIterable {
+    case unitPlurals = "localization/Localizable.stringsdict"
+    
+    var name: String { rawValue }
 }
 
 //MARK: - defining the targets
 private let name = "MyPackage"
 private let targets: [Target] = [
-    .target(.ui, dependencies: [.others, .dates]),
+    .target(.ui, dependencies: [.others, .dates], exclude: [.unitPlurals]),
     .target(.others),
-    .target(.dates, dependencies: .others),
+    .target(.dates, dependencies: [.others]),
     .target(.storage)
 ]
 
 private let testTargets: [Target] = [
-    .testTarget(.dates, dependencies: .others)
+    .testTarget(.dates, dependencies: [.others])
 ]
 
 //MARK: - defining the actual package
@@ -35,16 +47,41 @@ let package = Package(
     targets: targets + testTargets
 )
 
-//MARK: - simpler target declaration
+//MARK: - simpler, more robust target declaration
 fileprivate extension Target {
-    static func target(_ id: TargetID, dependencies: [TargetID] = []) -> Target {
-        .target(name: id.name, dependencies: dependencies.map(\.name).map(Dependency.init))
+    static func target(
+        _ id: TargetID,
+        dependencies: [TargetID] = [],
+        path: String? = nil,
+        exclude: [ResourceID] = [],
+        sources: [SourceID]? = nil,
+        resources: [ResourceID]? = nil
+    ) -> Target {
+        .target(
+            name: id.name,
+            dependencies: dependencies.map(\.name).map(Dependency.init),
+            path: path,
+            exclude: exclude.map(\.name),
+            sources: sources?.map(\.name),
+            resources: resources?.map(\.name).map { Resource.process($0) }
+        )
     }
     
-    static func testTarget(_ id: TargetID, dependencies: [TargetID] = []) -> Target {
-        .testTarget(name: id.tests, dependencies: (dependencies + [id]).map(\.name).map(Dependency.init))
+    static func testTarget(
+        _ id: TargetID,
+        dependencies: [TargetID] = [],
+        path: String? = nil,
+        exclude: [ResourceID] = [],
+        sources: [SourceID]? = nil,
+        resources: [ResourceID]? = nil
+    ) -> Target {
+        .testTarget(
+            name: id.tests,
+            dependencies: (dependencies + [id]).map(\.name).map(Dependency.init),
+            path: path,
+            exclude: exclude.map(\.name),
+            sources: sources?.map(\.name),
+            resources: resources?.map(\.name).map { Resource.process($0) }
+        )
     }
-    
-    static func target(_ id: TargetID, dependencies: TargetID) -> Target { .target(id, dependencies: [dependencies]) }
-    static func testTarget(_ id: TargetID, dependencies: TargetID) -> Target { .testTarget(id, dependencies: [dependencies]) }
 }
