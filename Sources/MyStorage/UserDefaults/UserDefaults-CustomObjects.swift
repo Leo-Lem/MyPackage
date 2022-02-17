@@ -9,20 +9,17 @@ import Foundation
 
 //MARK: - extends UserDefaults to enable saving and retrieving custom objects
 public extension UserDefaults {
-    func getObject<T: Decodable>(forKey defaultName: String, castTo type: T.Type) -> T? {
-        guard let fetchedData = self.data(forKey: defaultName) else {
-            return nil
-        }
+    func getObject<T: Decodable>(forKey key: String) -> T? {
+        guard
+            let data = self.data(forKey: key),
+            let decoded: T = try? JSONDecoder().decode(data)
+        else { return nil }
         
-        let decodedObject = try? JSONDecoder().decode(type, from: fetchedData)
-        return decodedObject
+        return decoded
     }
     
-    func setObject<T: Encodable>(_ object: T, forKey defaultName: String) {
-        guard let encodedObject = try? JSONEncoder().encode(object) else {
-            return
-        }
-        
-        self.set(encodedObject, forKey: defaultName)
+    func setObject<T: Encodable>(_ object: T, forKey key: String) {
+        guard let data = try? JSONEncoder().encode(object) else { return }
+        self.set(data, forKey: key)
     }
 }
