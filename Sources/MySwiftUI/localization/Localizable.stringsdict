@@ -5,8 +5,8 @@
 	<key>second(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@seconds@</string>
-		<key>seconds</key>
+		<string>%#@var@</string>
+		<key>var</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
@@ -21,8 +21,8 @@
 	<key>minute(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@minutes@</string>
-		<key>minutes</key>
+		<string>%#@var@</string>
+		<key>var</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
@@ -37,8 +37,8 @@
 	<key>point(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@points@</string>
-		<key>points</key>
+		<string>%#@var@</string>
+		<key>var</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
@@ -50,11 +50,27 @@
 			<string>points</string>
 		</dict>
 	</dict>
+	<key>cup(s) </key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@var@</string>
+		<key>var</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>cup</string>
+			<key>other</key>
+			<string>cups</string>
+		</dict>
+	</dict>
 	<key>%d second(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@seconds@</string>
-		<key>seconds</key>
+		<string>%#@var@</string>
+		<key>var</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
@@ -69,8 +85,8 @@
 	<key>%d minute(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@minutes@</string>
-		<key>minutes</key>
+		<string>%#@var@</string>
+		<key>var</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
@@ -85,8 +101,8 @@
 	<key>%d point(s)</key>
 	<dict>
 		<key>NSStringLocalizedFormatKey</key>
-		<string>%#@points@</string>
-		<key>points</key>
+		<string>%#@var@</string>
+		<key>var</key>
 		<dict>
 			<key>NSStringFormatSpecTypeKey</key>
 			<string>NSStringPluralRuleType</string>
@@ -98,6 +114,24 @@
 			<string>%d point</string>
 			<key>other</key>
 			<string>%d points</string>
+		</dict>
+	</dict>
+	<key>%d cup(s)</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@var@</string>
+		<key>var</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>zero</key>
+			<string>no cups</string>
+			<key>one</key>
+			<string>%d cup</string>
+			<key>other</key>
+			<string>%d cups</string>
 		</dict>
 	</dict>
 </dict>
