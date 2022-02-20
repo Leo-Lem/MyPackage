@@ -8,6 +8,7 @@
 import Foundation
 
 public extension Array {
+    
     init(count: Int, _ generateElement: (Int) -> Element) {
         var array = [Element]()
         for i in 0..<count {
@@ -23,4 +24,5 @@ public extension Array {
         }
         self = array
     }
+    
 }

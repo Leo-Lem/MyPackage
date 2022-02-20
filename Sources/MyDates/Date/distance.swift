@@ -6,9 +6,7 @@
 //
 
 import Foundation
-import MyOthers
 
-//MARK: implementing distance method extension to get date distances in other units
 public extension Date {
     /**
      Returns the distance to another Date, converted to a calendar component.

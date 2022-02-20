@@ -6,9 +6,12 @@ import Foundation
 //MARK: - defining the library names
 enum TargetID: String, CaseIterable {
     case ui = "MySwiftUI",
-         dates = "MyDates",
          others = "MyOthers",
-         storage = "MyStorage"
+         storage = "MyStorage",
+         collections = "MyCollections",
+         numbers = "MyNumbers",
+         strings = "MyStrings",
+         dates = "MyDates"
     
     var name: String { rawValue }
     var tests: String { "\(self.name)Tests" }
@@ -29,10 +32,13 @@ enum ResourceID: String, CaseIterable {
 //MARK: - defining the targets
 private let name = "MyPackage"
 private let targets: [Target] = [
-    .target(.ui, dependencies: [.others, .dates], exclude: [.unitPlurals]),
-    .target(.others),
-    .target(.dates, dependencies: [.others]),
-    .target(.storage)
+    .target(.ui, dependencies: [.others, .storage, .collections, .numbers, .strings, .dates], exclude: [.unitPlurals]),
+    .target(.others, dependencies: [.storage]),
+    .target(.storage),
+    .target(.collections, dependencies: [.storage, .numbers]),
+    .target(.numbers),
+    .target(.strings),
+    .target(.dates)
 ]
 
 private let testTargets: [Target] = [

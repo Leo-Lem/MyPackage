@@ -8,7 +8,5 @@
 import Foundation
 
 public extension Collection where Element: ExpressibleByIntegerLiteral & AdditiveArithmetic {
-    func sum() -> Element {
-        self.reduce(0, +)
-    }
+    func sum() -> Element { self.reduce(0, +) }
 }

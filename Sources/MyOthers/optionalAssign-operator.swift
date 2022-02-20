@@ -8,7 +8,7 @@
 import Foundation
 
 infix operator ?=: AssignmentPrecedence
-public func ?= <T: Any>(left: inout T, right: T?) {
+public func ?= <T>(left: inout T, right: T?) {
     if let right = right {
         left = right
     }
