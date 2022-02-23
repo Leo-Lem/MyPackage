@@ -7,7 +7,8 @@
 
 import Foundation
 
-//MARK: - keyPath alternatives to sequence methods
+//MARK: - Sequence
+//TODO: add documentation
 public extension Sequence {
     
     func map<T>(_ keyPath: KeyPath<Element, T>) -> [T] {

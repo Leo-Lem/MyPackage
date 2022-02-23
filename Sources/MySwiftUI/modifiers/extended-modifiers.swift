@@ -1,15 +1,126 @@
 //
-//  File.swift
+//  extended-modifiers.swift
 //  
 //
-//  Created by Leopold Lemmermann on 13.02.22.
+//  Created by Leopold Lemmermann on 23.02.22.
 //
 
 import SwiftUI
+import simd
 
+//MARK: - animation(_ value)
 public extension View {
     
-    //MARK: - with action and message
+    /**
+     Applies the default animation to the view when the specified value changes.
+
+     - parameter value: A value to monitor for changes.
+     - returns: A view that applies the default animation to this view whenever `value` changes.
+    */
+    func animation<V: Equatable>(
+        _ value: V
+    ) -> some View {
+        self
+            .animation(.default, value: value)
+    }
+    
+}
+
+//MARK: - disabled(color)
+public extension View {
+    
+    /**
+     Colors the disabled view with the provided color
+     
+     ```
+     Text("My tappable text...")
+        .onTapGesture { /*do something*/ }
+        .disabled(myCondition, color: .gray)
+     ```
+     
+     - parameters:
+        - condition: A Boolean value that determines whether users can interact with this view.
+        - color: The color to apply.
+     - returns: A view that controls whether users can interact with this view and is colored according to its interaction state.
+     */
+    func disabled(
+        _ condition: Bool,
+        color: Color
+    ) -> some View {
+        self
+            .disabled(condition)
+            .if(condition) { view in
+                view.foregroundColor(color)
+            }
+    }
+    
+}
+
+#if canImport(UIKit)
+//MARK: - cornerRadius
+//TODO: add documentation
+extension View {
+    
+    /***/
+    public func cornerRadius(
+        _ radius: CGFloat = 10,
+        corners: UIRectCorner
+    ) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners) )
+    }
+    
+    /***/
+    public func cornerRadius<Style: ShapeStyle>(_ cornerRadius: Double, border: (style: Style, width: Double)) -> some View {
+        self
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+            .overlay(
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .stroke(border.style, lineWidth: border.width)
+            )
+    }
+    
+}
+
+/***/
+private struct RoundedCorner: Shape {
+    let radius: CGFloat, corners: UIRectCorner
+    
+    func path(in rect: CGRect) -> Path {
+        Path(
+            UIBezierPath(
+                roundedRect: rect,
+                byRoundingCorners: corners,
+                cornerRadii: CGSize(width: radius, height: radius)
+            ).cgPath
+        )
+    }
+}
+#endif
+
+//MARK: - background(image, opacity)
+//TODO: add documentation
+public extension View {
+    
+    /**
+     
+     */
+    func background(image: String, opacity: Double = 1) -> some View {
+        self.background {
+                Image(decorative: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .ignoresSafeArea()
+                    .opacity(opacity)
+            }
+    }
+    
+}
+
+//MARK: - alert(optional)
+//TODO: add documentation
+public extension View {
+    
+    //MARK: with action and message
     func alert<T, A, M>(
         _ item: Binding<T?>,
         title: LocalizedStringKey = "",

@@ -7,7 +7,9 @@
 
 import SwiftUI
 
+//TODO: add documentation
 public struct ExtendedSegmentedPicker<Content: View, Selection: Hashable>: View {
+    
     @Binding var selection: Selection
     let options: (`left`: [Selection], segmented: [Selection], `right`: [Selection]),
         labels: (segmented: (_ selection: Selection) -> Content, menu: (_ selection: Selection) -> Content)
@@ -38,6 +40,7 @@ public struct ExtendedSegmentedPicker<Content: View, Selection: Hashable>: View 
             }
         }
     }
+    
 }
 
 public extension ExtendedSegmentedPicker {
