@@ -24,7 +24,7 @@ enum SourceID: String, CaseIterable {
 }
 
 enum ResourceID: String, CaseIterable {
-    case unitPlurals = "localization/Localizable.stringsdict"
+    case unitPlurals = "others/Localizable.stringsdict"
     
     var name: String { rawValue }
 }
@@ -37,7 +37,7 @@ private let targets: [Target] = [
     .target(.storage),
     .target(.collections, dependencies: [.storage, .numbers]),
     .target(.numbers),
-    .target(.strings),
+    .target(.strings, dependencies: [.others, .collections]),
     .target(.dates)
 ]
 

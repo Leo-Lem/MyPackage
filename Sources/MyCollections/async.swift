@@ -1,13 +1,16 @@
 //
-//  asyncMap.swift
-//  Ashtray
+//  async.swift
+// 
 //
 //  Created by Leopold Lemmermann on 26.01.22.
 //
 
 import Foundation
 
+//MARK: - Sequence
 public extension Sequence {
+    
+    /***/
     func asyncMap<T>(
         _ transform: (Element) async throws -> T
     ) async rethrows -> [T] {
@@ -19,6 +22,7 @@ public extension Sequence {
         return values
     }
     
+    /***/
     func asyncCompactMap<T>(
         _ transform: (Element) async throws -> T?
     ) async rethrows -> [T] {
@@ -31,4 +35,15 @@ public extension Sequence {
         
         return values
     }
+    
+}
+
+//MARK: - AsyncSequence
+public extension AsyncSequence {
+    
+    /***/
+    func collect() async rethrows -> [Element] {
+        try await reduce(into: [Element]()) { $0.append($1) }
+    }
+    
 }

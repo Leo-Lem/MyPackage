@@ -1,5 +1,5 @@
 //
-//  SwiftUIView.swift
+//  PreviewBinding.swift
 //  
 //
 //  Created by Leopold Lemmermann on 26.01.22.

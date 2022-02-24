@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  operators.swift
 //  
 //
 //  Created by Leopold Lemmermann on 23.02.22.
@@ -38,4 +38,58 @@ public extension Double {
 
 public extension BinaryInteger {
     static func ** (num: Self, power: Self) -> Self { Self(pow(Double(num), Double(power))) }
+}
+
+//MARK: - extended arithmetics
+public extension BinaryInteger {
+    
+    static func + <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) + rhs }
+    static func + <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs + T(rhs) }
+    
+    static func - <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) - rhs }
+    static func - <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs - T(rhs) }
+    
+    static func * <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) * rhs }
+    static func * <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs * T(rhs) }
+    
+    static func / <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) / rhs }
+    static func / <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs / T(rhs) }
+    
+}
+
+//MARK: - min, max, clamped
+infix operator <|: AssignmentPrecedence
+infix operator |<: AssignmentPrecedence
+
+public extension Comparable {
+    
+    /// Max operator, bounds a value with an upper bound.
+    static func <| (
+        _ value: Self,
+        upperBound: Self
+    ) -> Self {
+        min(value, upperBound)
+    }
+    
+    /// Min operator, bounds a value with a lower bound
+    static func |< (
+        lowerBound: Self,
+        _ value: Self
+    ) -> Self {
+        max(value, lowerBound)
+    }
+    
+    //TODO: add documentation
+    static func clamped(
+        _ value: Self,
+        lowerBound: Self,
+        upperBound: Self
+    ) -> Self {
+        lowerBound |< value <| upperBound
+    }
+    
+    mutating func clamp(lowerBound: Self, upperBound: Self) {
+        self = Self.clamped(self, lowerBound: lowerBound, upperBound: upperBound)
+    }
+    
 }
