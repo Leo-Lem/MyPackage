@@ -7,13 +7,6 @@
 
 import Foundation
 
-//MARK: - triangular calculation
-public extension BinaryInteger {
-    
-    var triangular: Self { Self(Array(1...Int(self)).reduce(0, +)) }
-    
-}
-
 //MARK: - unit conversion on numbers
 public extension BinaryInteger {
     

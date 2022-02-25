@@ -48,7 +48,7 @@ public extension Array {
     }
     
     /***/
-    init(count: Int, _ generateElement: () -> Element) {
+    init(count: Int, _ generateElement: @autoclosure () -> Element) {
         var array = [Element]()
         for _ in 0..<count {
             array.append(generateElement())

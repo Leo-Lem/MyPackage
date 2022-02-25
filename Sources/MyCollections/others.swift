@@ -11,6 +11,7 @@ import Foundation
 public extension Collection where Index == Int {
     
     ///
+    @inlinable
     var lastIndex: Int { self.endIndex - 1 }
     
 }

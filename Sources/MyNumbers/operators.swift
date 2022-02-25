@@ -79,7 +79,7 @@ public extension Comparable {
         max(value, lowerBound)
     }
     
-    //TODO: add documentation
+    /***/
     static func clamped(
         _ value: Self,
         lowerBound: Self,
@@ -88,8 +88,28 @@ public extension Comparable {
         lowerBound |< value <| upperBound
     }
     
+    /***/
     mutating func clamp(lowerBound: Self, upperBound: Self) {
         self = Self.clamped(self, lowerBound: lowerBound, upperBound: upperBound)
+    }
+    
+}
+
+//MARK: - triangular operator
+prefix operator ∆
+
+public extension BinaryInteger {
+    
+    ///
+    prefix static func ∆ (
+        _ num: Self
+    ) -> Self {
+        num.triangular()
+    }
+    
+    /***/
+    func triangular() -> Self {
+        Self(Array(1...Int(self)).reduce(0, +))
     }
     
 }

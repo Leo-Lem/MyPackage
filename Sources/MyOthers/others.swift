@@ -9,7 +9,75 @@ import Foundation
 
 //MARK: - undefined method for placeholders during development
 /***/
-public func undefined<T>(hint: String = "", file: StaticString = #file, line: UInt = #line) -> T {
+public func undefined<T>(
+    hint: String = "",
+    file: StaticString = #file,
+    line: UInt = #line
+) -> T {
     let message = hint == "" ? "" : ": \(hint)"
-    fatalError("undefined \(T.self)\(message)", file:file, line:line)
+    fatalError("undefined \(T.self)\(message)", file: file, line: line)
+}
+
+//MARK: - AnyEquatable
+/***/
+public struct AnyEquatable {
+    
+    public var item: Any
+    private let equals: (Self) -> Bool
+    
+    public init<T: Equatable>(_ item: T) {
+        self.item = item
+        
+        self.equals = { item == ($0.item as? T) }
+    }
+    
+}
+
+extension AnyEquatable: Equatable {
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool { lhs.equals(rhs) }
+    public static func == <Other: Equatable>(lhs: Self, rhs: Other) -> Bool { (lhs.item as? Other) == rhs }
+    public static func == <Other: Equatable>(lhs: Other, rhs: Self) -> Bool { lhs == (rhs.item as? Other) }
+    
+}
+
+//MARK: - AnyComparable
+/***/
+public struct AnyComparable {
+    
+    public var item: Any
+    private let equals: (Self) -> Bool,
+                less: (Self) -> Bool
+    
+    public init<T: Comparable>(_ item: T) {
+        self.item = item
+        
+        self.equals = {
+            item == $0.item as? T
+        }
+        
+        self.less = {
+            guard let other = ($0.item as? T) else { return false }
+            return item < other
+        }
+    }
+    
+}
+
+extension AnyComparable: Comparable {
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool { lhs.equals(rhs) }
+    public static func == <Other: Equatable>(lhs: Self, rhs: Other) -> Bool { (lhs.item as? Other) == rhs }
+    public static func == <Other: Equatable>(lhs: Other, rhs: Self) -> Bool { lhs == (rhs.item as? Other) }
+    
+    public static func < (lhs: Self, rhs: Self) -> Bool { lhs.less(rhs) }
+    public static func < <Other: Comparable>(lhs: Self, rhs: Other) -> Bool {
+        guard let lhs = (lhs.item as? Other) else { return false }
+        return lhs < rhs
+    }
+    public static func < <Other: Comparable>(lhs: Other, rhs: Self) -> Bool {
+        guard let rhs = (rhs.item as? Other) else { return false }
+        return lhs < rhs
+    }
+    
 }
