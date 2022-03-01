@@ -49,3 +49,85 @@ public extension String.StringInterpolation {
         appendLiteral(style.format(collection))
     }
 }
+
+//MARK: - HTML interpolation
+public struct HTML: ExpressibleByStringInterpolation {
+    
+    ///
+    private(set) public var content: String
+    
+    /***/
+    public init(stringInterpolation: StringInterpolation) {
+        content = stringInterpolation.html
+    }
+    
+    /***/
+    public init(stringLiteral value: String) {
+        content = value
+    }
+    
+}
+
+public extension HTML {
+    
+    /***/
+    struct StringInterpolation: StringInterpolationProtocol {
+        
+        ///
+        private(set) public var html = ""
+        
+        /***/
+        public init(literalCapacity: Int, interpolationCount: Int) {
+            let estimatedSize = literalCapacity + interpolationCount * 16
+            html.reserveCapacity(estimatedSize)
+        }
+        
+        /***/
+        public mutating func appendLiteral(_ literal: StringLiteralType) {
+            html.append(literal)
+        }
+        
+    }
+    
+}
+
+public extension HTML.StringInterpolation {
+    
+    /***/
+    private mutating func escapedAppend(_ content: String) {
+        let replacements: [String: String] = ["&": "&amp", "<": "&lt", ">": "&gt", "\"": "&quot"]
+        var replaced = content
+        
+        replacements.forEach { replacement in
+            replaced = replaced.replacingOccurrences(of: replacement.key, with: replacement.value)
+        }
+        
+        html.append(replaced)
+    }
+    
+    /***/
+    mutating func appendInterpolation(_ url: URL, content: String) {
+        html.append("<a href=\"\(url.absoluteString)\">")
+        escapedAppend(content)
+        html.append("</a>")
+    }
+    
+    /***/
+    mutating func appendInterpolation(code: String) {
+        if code.contains("\n") {
+            html.append("<pre><code>")
+            escapedAppend(code)
+            html.append("</code></pre>")
+        } else {
+            html.append("<code>")
+            escapedAppend(code)
+            html.append("</code>")
+        }
+    }
+    
+    /***/
+    mutating func appendInterpolation(_ date: Date, date dateStyle: Date.FormatStyle.DateStyle = .complete, time timeStyle: Date.FormatStyle.TimeStyle = .omitted) {
+        html.append(date.formatted(date: dateStyle, time: timeStyle))
+    }
+    
+}

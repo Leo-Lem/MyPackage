@@ -8,7 +8,6 @@
 import SwiftUI
 
 //MARK: - Button
-//TODO: add documentation
 public extension Button {
     
     /***/
@@ -84,7 +83,6 @@ public extension Button {
 }
 
 //MARK: - DatePicker
-//TODO: add documentation
 public extension DatePicker {
     
     /***/
@@ -105,7 +103,6 @@ public extension DatePicker {
 }
 
 //MARK: - ForEach
-//TODO: add documentation
 import MyNumbers
 public extension ForEach where Data == Range<Int>, ID == Int, Content: View {
     
@@ -122,7 +119,6 @@ public extension ForEach where Data == Range<Int>, ID == Int, Content: View {
 }
 
 //MARK: - Menu
-//TODO: add documentation
 public extension Menu where Label == Image {
     
     /***/

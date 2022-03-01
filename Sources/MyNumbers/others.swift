@@ -41,3 +41,10 @@ public extension BinaryFloatingPoint {
     }
     
 }
+
+public extension Double {
+    
+    static var twoPi: Self { 2 * .pi }
+    static var halfPi: Self { pi / 2 }
+    
+}
