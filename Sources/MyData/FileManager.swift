@@ -22,6 +22,7 @@ public extension FileManager {
     
     /***/
     func load<T: Decodable>(
+        _ type: T.Type = T.self,
         _ file: String,
         decoder: JSONDecoder = JSONDecoder()
     ) throws -> T {

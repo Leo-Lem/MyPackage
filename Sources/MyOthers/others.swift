@@ -94,3 +94,16 @@ public extension Task where Success == Never, Failure == Never {
     }
     
 }
+
+//MARK: - Intializable procotol
+/// Types which have an initializer without parameters can conform.
+public protocol Initializable { init() }
+
+extension Bool: Initializable {}
+extension Float: Initializable {}
+extension Double: Initializable {}
+extension Int: Initializable {}
+extension String: Initializable {}
+extension Array: Initializable {}
+extension Dictionary: Initializable {}
+extension Date: Initializable {}

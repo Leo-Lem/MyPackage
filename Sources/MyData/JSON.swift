@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 import CoreLocation
+import MyOthers
 
 //MARK: - Decoder methods with type inferrence
 public extension JSONDecoder {
@@ -54,6 +55,7 @@ public extension URLSession {
     
     /***/
     func load<T: Decodable>(
+        _ type: T.Type = T.self,
         _ url: URL,
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> T {
@@ -74,12 +76,13 @@ public extension URLSession {
     
     /***/
     func load<T: Decodable>(
+        _ type: T.Type = T.self,
         _ urlString: String,
         decoder: JSONDecoder = JSONDecoder()
     ) async throws -> T {
         guard let url = URL(string: urlString) else { throw LoadingError.url(urlString) }
         
-        return try await load(url, decoder: decoder)
+        return try await load(type, url, decoder: decoder)
     }
     
     enum LoadingError: Error {
@@ -143,6 +146,154 @@ extension CLLocationCoordinate2D: Codable {
         } catch {
             print("#####Decoding coordinates failed:\n\(error)")
         }
+    }
+    
+}
+
+//MARK: - custom JSON
+/***/
+@dynamicMemberLookup
+public struct JSON {
+    
+    /// The optional value of any kind.
+    public var value: Any?
+    /// A date format defaulting to ISO8601
+    public var dateFormat: String
+    
+    /***/
+    public init(
+        _ value: Any? = nil,
+        dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+    ) {
+        self.value = value
+        self.dateFormat = dateFormat
+    }
+    
+    /***/
+    public init(
+        data: Data,
+        options: JSONSerialization.ReadingOptions = [],
+        dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+    ) throws {
+        value = try JSONSerialization.jsonObject(with: data, options: options)
+        self.dateFormat = dateFormat
+    }
+    
+    /***/
+    public init(
+        string: String,
+        options: JSONSerialization.ReadingOptions = [],
+        dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
+    ) throws {
+        try self.init(
+            data: Data(string.utf8),
+            options: options,
+            dateFormat: dateFormat
+        )
+    }
+    
+}
+
+public extension JSON {
+    
+    /**
+     Transforms the value to some generic type T, which can be inferred or explicitly specified.
+     */
+    func typed<T>(
+        to type: T.Type = T.self
+    ) -> T? {
+        switch value {
+        case let array as [Any] where T.self == [JSON].self:
+            return array.map { JSON($0) } as? T
+            
+        case let dict as [String: Any] where T.self == [String: JSON].self:
+            return dict.mapValues { JSON($0) } as? T
+            
+        case let string as String where T.self == Date.self:
+            let formatter = DateFormatter()
+            formatter.dateFormat = self.dateFormat
+            return formatter.date(from: string) as? T
+            
+        default:
+            return value as? T
+        }
+    }
+    
+    /**
+     Adds a default value to the T-typed value. Constrained to types that are initializable without parameters.
+     */
+    func defaulted<T>(
+        to type: T.Type = T.self
+    ) -> T where T: Initializable {
+        typed() ?? T()
+    }
+    
+}
+
+public extension JSON {
+    
+    /// Works if the JSON value is an array. Returns the element for the given index from said array.
+    subscript(index: Int) -> JSON {
+        get { typed(to: [JSON].self)?[index] ?? JSON(nil) }
+        set {
+            guard var array: [JSON] = typed() else { return }
+            array[index] = newValue
+            self.value = array
+        }
+    }
+    
+    /// Works if the JSON value is a dictionary. Returns the element for the key from said dictionary.
+    subscript(key: String) -> JSON {
+        get { typed(to: [String: JSON].self)?[key] ?? JSON(nil) }
+        set {
+            guard var dict: [String: JSON] = typed() else { return }
+            dict[key] = newValue
+            self.value = dict
+        }
+    }
+    
+    /// Variant which makes dynamic member lookup possible
+    subscript(dynamicMember key: String) -> JSON {
+        get { typed(to: [String: JSON].self)?[key] ?? JSON(nil) }
+        set {
+            guard var dict: [String: JSON] = typed() else { return }
+            dict[key] = newValue
+            self.value = dict
+        }
+    }
+    
+}
+
+extension JSON: RandomAccessCollection {
+    
+    public var startIndex: Int { defaulted(to: [JSON].self).startIndex }
+    public var endIndex: Int { defaulted(to: [JSON].self).endIndex }
+    
+}
+
+extension JSON: ExpressibleByStringLiteral,
+                ExpressibleByFloatLiteral,
+                ExpressibleByNilLiteral,
+                ExpressibleByBooleanLiteral,
+                ExpressibleByIntegerLiteral,
+                ExpressibleByArrayLiteral,
+                ExpressibleByDictionaryLiteral {
+    
+    public init(stringLiteral value: StringLiteralType) { self.init(value) }
+    public init(nilLiteral: ()) { self.init(nil) }
+    public init(floatLiteral value: FloatLiteralType) { self.init(value) }
+    public init(booleanLiteral value: BooleanLiteralType) { self.init(value) }
+    public init(integerLiteral value: IntegerLiteralType) { self.init(value) }
+    public init(arrayLiteral elements: JSON...) { self.init(elements) }
+    public init(dictionaryLiteral elements: (String, JSON)...) { self.init(elements) }
+    
+}
+
+extension JSON: CustomStringConvertible {
+    
+    public var description: String {
+        guard let value = value else { return "nil" }
+        return "\(value)"
     }
     
 }

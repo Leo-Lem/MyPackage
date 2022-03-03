@@ -34,7 +34,7 @@ private let name = "MyPackage"
 private let targets: [Target] = [
     .target(.ui, dependencies: [.others, .data, .collections, .numbers, .strings, .dates], exclude: [.unitPlurals]),
     .target(.others),
-    .target(.data),
+    .target(.data, dependencies: [.others]),
     .target(.collections, dependencies: [.numbers]),
     .target(.numbers),
     .target(.strings, dependencies: [.others, .collections]),
