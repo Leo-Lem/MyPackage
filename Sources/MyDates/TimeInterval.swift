@@ -9,10 +9,12 @@ import Foundation
 
 public extension TimeInterval {
     
+    /***/
     init<V: BinaryInteger>(_ value: V, _ unit: Calendar.Component) {
         self.init(valuesWithUnit: (value, unit))
     }
     
+    /***/
     init<V: BinaryInteger>(valuesWithUnit: (value: V, unit: Calendar.Component)...) {
         var interval: TimeInterval = 0
         
@@ -36,6 +38,26 @@ public extension TimeInterval {
         }
         
         self = interval
+    }
+    
+    /***/
+    func convert(to unit: Calendar.Component) -> Double? {
+        var value = self
+        
+        switch unit {
+        case .nanosecond: value *= 1_000_000_000
+        case .second: break
+        case .minute: value /= 60
+        case .hour: value /= (60 * 60)
+        case .day: value /= (60 * 60 * 24)
+        case .weekOfYear: value /= (60 * 60 * 24 * 7)
+        case .month: value /= (60 * 60 * 24 * 30.41)
+        case .quarter: value /= (60 * 60 * 24 * 91.3125)
+        case .year: value /= (60 * 60 * 24 * 365.25)
+        default: return nil
+        }
+        
+        return value
     }
     
 }

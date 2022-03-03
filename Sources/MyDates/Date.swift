@@ -8,6 +8,7 @@
 import Foundation
 
 public extension Date {
+    
     /**
      Returns the distance to another Date, converted to a calendar component.
      
@@ -71,4 +72,86 @@ public extension Date {
         
         return start.distance(to: end, unit: unit, precise: precise, cal: cal)
     }
+    
+}
+
+//MARK: - startOf and endOf methods
+public extension Date {
+    
+    /***/
+    func startOf(_ comp: Calendar.Component, cal: Calendar = .current) -> Date? {
+        var comps: Set<Calendar.Component> = [.calendar]
+            
+        switch comp {
+        case .second: comps.formUnion([.year, .month, .day, .hour, .minute, .second])
+        case .minute: comps.formUnion([.year, .month, .day, .hour, .minute])
+        case .hour: comps.formUnion([.year, .month, .day, .hour])
+        case .day, .weekday: comps.formUnion([.year, .month, .day])
+        case .weekOfYear, .weekOfMonth: comps.formUnion([.yearForWeekOfYear, .weekOfYear])
+        case .month: comps.formUnion([.year, .month])
+        case .quarter: comps.formUnion([.year, .quarter])
+        case .year: comps.formUnion([.year])
+        default: return nil
+        }
+        
+        return cal.dateComponents(comps, from: self).date
+    }
+    
+    /***/
+    func endOf(_ comp: Calendar.Component, cal: Calendar = .current) -> Date? {
+        guard
+            let start = startOf(comp, cal: cal),
+            let next = cal.date(byAdding: comp, value: 1, to: start)
+        else { return nil }
+        
+        return next - 1
+    }
+    
+}
+
+//MARK: - strideable conformance
+extension Date: Strideable {
+    
+    /***/
+    public func distance(to other: Date) -> TimeInterval {
+         other.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
+    }
+
+    /***/
+    public func advanced(by n: TimeInterval) -> Date { self + n }
+    
+}
+
+//MARK: - enumarating data ranges
+public extension Date {
+    
+    func enumerate(
+        _ interval: Calendar.Component = .day,
+        in span: Calendar.Component,
+        cal: Calendar = .current
+    ) -> [Date]? {
+        guard let start = startOf(span), let end = endOf(span) else { return nil }
+        
+        return (start...end).enumerate(interval, cal: cal)
+    }
+    
+}
+
+public extension ClosedRange where Bound == Date {
+    
+    func enumerate(
+        _ interval: Calendar.Component = .day,
+        cal: Calendar = .current
+    ) -> [Date] {
+        Array(stride(from: self.lowerBound, through: self.upperBound, by: TimeInterval(1, interval)))
+    }
+    
+}
+
+//MARK: - isIn methods
+public extension Date {
+    func isInToday(cal: Calendar = .current) -> Bool { cal.isDateInToday(self) }
+    func isInYesterday(cal: Calendar = .current) -> Bool { cal.isDateInYesterday(self) }
+    func isInTomorrow(cal: Calendar = .current) -> Bool { cal.isDateInTomorrow(self) }
+    func isIn(_ date: Date, cal: Calendar = .current) -> Bool { cal.isDate(self, inSameDayAs: date) }
 }
