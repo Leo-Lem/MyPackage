@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-//TODO: add documentation
+/***/
 public struct ExtendedSegmentedPicker<Content: View, Selection: Hashable>: View {
     
     @Binding var selection: Selection
@@ -33,6 +33,7 @@ public struct ExtendedSegmentedPicker<Content: View, Selection: Hashable>: View 
         .foregroundColor(.primary)
     }
     
+    ///
     private func menu(_ options: [Selection]) -> some View {
         Menu(systemImage: "ellipsis.circle\(options.contains(selection) ? ".fill" : "")") {
             ForEach(options, id: \.self) { option in
@@ -44,6 +45,8 @@ public struct ExtendedSegmentedPicker<Content: View, Selection: Hashable>: View 
 }
 
 public extension ExtendedSegmentedPicker {
+    
+    /***/
     init(
         _ selection: Binding<Selection>,
         options: (`left`: [Selection], segmented: [Selection], `right`: [Selection]),
@@ -57,6 +60,7 @@ public extension ExtendedSegmentedPicker {
         )
     }
     
+    /***/
     init(
         _ selection: Binding<Selection>,
         options: [Selection], segments: Int = 3, startAt: Int = 0,
@@ -75,6 +79,7 @@ public extension ExtendedSegmentedPicker {
         )
     }
     
+    /***/
     init(
         _ selection: Binding<Selection>,
         options: (`left`: [Selection], segmented: [Selection], `right`: [Selection]),
@@ -87,6 +92,7 @@ public extension ExtendedSegmentedPicker {
         )
     }
     
+    /***/
     init(
         _ selection: Binding<Selection>,
         options: [Selection], segments: Int = 3, startAt: Int = 0,
@@ -98,6 +104,7 @@ public extension ExtendedSegmentedPicker {
             segmentLabel: label, menuLabel: label
         )
     }
+    
 }
 
 //MARK: - Previews

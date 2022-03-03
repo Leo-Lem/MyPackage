@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  KVS.swift
 //  
 //
 //  Created by Leopold Lemmermann on 16.12.21.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-//MARK: - extends UserDefaults to enable saving and retrieving custom objects
+//MARK: - UserDefaults
 public extension UserDefaults {
     func getObject<T: Decodable>(forKey key: String) -> T? {
         guard

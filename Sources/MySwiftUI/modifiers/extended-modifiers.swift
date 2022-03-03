@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import simd
 
 //MARK: - animation(_ value)
 public extension View {

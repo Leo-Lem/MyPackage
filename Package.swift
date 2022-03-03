@@ -7,7 +7,7 @@ import Foundation
 enum TargetID: String, CaseIterable {
     case ui = "MySwiftUI",
          others = "MyOthers",
-         storage = "MyStorage",
+         data = "MyData",
          collections = "MyCollections",
          numbers = "MyNumbers",
          strings = "MyStrings",
@@ -32,10 +32,10 @@ enum ResourceID: String, CaseIterable {
 //MARK: - defining the targets
 private let name = "MyPackage"
 private let targets: [Target] = [
-    .target(.ui, dependencies: [.others, .storage, .collections, .numbers, .strings, .dates], exclude: [.unitPlurals]),
-    .target(.others, dependencies: [.storage]),
-    .target(.storage),
-    .target(.collections, dependencies: [.storage, .numbers]),
+    .target(.ui, dependencies: [.others, .data, .collections, .numbers, .strings, .dates], exclude: [.unitPlurals]),
+    .target(.others),
+    .target(.data),
+    .target(.collections, dependencies: [.numbers]),
     .target(.numbers),
     .target(.strings, dependencies: [.others, .collections]),
     .target(.dates)

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Bundle.swift
 //  
 //
 //  Created by Leopold Lemmermann on 12.02.22.
@@ -8,6 +8,8 @@
 import Foundation
 
 public extension Bundle {
+    
+    /***/
     func load<T: Decodable>(
         _ file: String,
         decoder: JSONDecoder = JSONDecoder()
@@ -25,6 +27,7 @@ public extension Bundle {
         return decoded
     }
     
+    /***/
     enum LoadingError: Error {
         case url(_ file: String),
              fetching(_ file: String, error: Error),
@@ -38,4 +41,12 @@ public extension Bundle {
             }
         }
     }
+    
+}
+
+public extension Bundle {
+    
+    /// Gets the projects name as a String, if possible.
+    var displayName: String? { object(forInfoDictionaryKey: "CFBundleDisplayName") as? String }
+    
 }
