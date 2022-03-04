@@ -33,40 +33,35 @@ public struct DataPoint: Identifiable {
     
 }
 
+extension DataPoint: Hashable {}
 extension DataPoint: Comparable {
     
-    public static func < (lhs: Self, rhs: Self) -> Bool {
-        lhs.value < rhs.value
-    }
+    public static func < (lhs: Self, rhs: Self) -> Bool { lhs.value < rhs.value }
+    
+}
+
+public extension Array where Element == DataPoint {
+    
+    func maxValue() -> Double { self.max()?.value ?? 1 }
     
 }
 
 #if DEBUG
-extension Array where Element == DataPoint {
+public extension Array where Element == DataPoint {
     static let examples: [Element] = [Double](count: 5, .random(in: 10...1000)).map { DataPoint($0, title: "Data Point") }
     
     static func lineExamples() -> [DataPoint] {
-        var isGoingUp = true
-        var currentValue = 50.0
-
+        var up = true,
+            value = 50.0
+        
         return (1...50).map { _ in
-            if isGoingUp {
-                currentValue += Double.random(in: 1...10)
-            } else {
-                currentValue += -Double.random(in: 1...10)
+            value += Double.random(in: 1...10) * (up ? 1: -1)
+            
+            if (up && Int.random(in: 0..<10) == 0) || (!up && Int.random(in: 0..<7) == 0) {
+                up.toggle()
             }
-
-            if isGoingUp {
-                if Int.random(in: 0..<10) == 0 {
-                    isGoingUp.toggle()
-                }
-            } else {
-                if Int.random(in: 0..<7) == 0 {
-                    isGoingUp.toggle()
-                }
-            }
-
-            return DataPoint(abs(currentValue))
+            
+            return DataPoint(abs(value))
         }
     }
 }

@@ -6,16 +6,15 @@
 //
 
 import SwiftUI
+import MyNumbers
 import MyCollections
 
 /***/
 public struct PieChart: View {
-    ///
+
     let segments: [Segment]
     
-    ///
     public let strokeWidth: Double?,
-               ///
                legend: Bool
     
     public var body: some View {
@@ -67,7 +66,6 @@ public struct PieChart: View {
 }
 
 //MARK: - Segments
-import MyNumbers
 extension PieChart {
     /***/
     struct Segment: Shape, Identifiable {

@@ -11,9 +11,8 @@ import MyNumbers
 /***/
 public struct BarChart: View {
     ///
-    public let dataPoints: [DataPoint]
-    
-    public let lines: Int
+    public let dataPoints: [DataPoint],
+               lines: Int
     
     public var body: some View {
         ZStack {
@@ -27,7 +26,7 @@ public struct BarChart: View {
             HStack {
                 VStack {
                     ForEach(0..<lines, id: \.self) { i in
-                        Text(Int(maxValue / 10 * (10-i)).formatted(), font:. caption)
+                        Text(Int(maxValue / 10 * (10-i)).formatted(), font: .caption)
                             .padding(.horizontal)
                             .animation(nil, value: dataPoints)
                         Spacer()
