@@ -9,10 +9,16 @@ import Foundation
 
 public extension Bundle {
 
-    /// <#Description#>
-    /// - Returns: <#description#>
+    
+    /// Loads data from a file in the bundle, decodes it to a generic type T, and finally returns it.
+    /// - Parameters:
+    ///    - type: Explicit specification of the type. Defaults to whatever type is inferred.
+    ///    - file: The String name of the file to be loaded (with extension).
+    ///    - decoder: A JSONDecoder for decoding the contents of the file. Defaults to no-parameter init.
+    /// - Returns: An item of generic type T.
+    /// - Throws: A LoadingError.
     func load<T: Decodable>(
-        _ type: T.Type = T.self,
+        type: T.Type = T.self,
         _ file: String,
         decoder: JSONDecoder = JSONDecoder()
     ) throws -> T {
@@ -30,19 +36,21 @@ public extension Bundle {
     }
 
 
-    /// <#Description#>
-    /// - Returns: <#description#>
+    /// Loads data from a file in the bundle, decodes it to a generic type T, and finally returns it. Non-throwing variant.
+    /// - Parameters:
+    ///    - type: Explicit specification of the type. Defaults to whatever type is inferred.
+    ///    - optional: The String name of the file to be loaded (with extension).
+    ///    - decoder: A JSONDecoder for decoding the contents of the file. Defaults to no-parameter init.
+    /// - Returns: An optional object of generic type T.
     func load<T: Decodable>(
-        _ type: T.Type = T.self,
+        type: T.Type = T.self,
         optional file: String,
         decoder: JSONDecoder = JSONDecoder()
     ) -> T? {
-        try? load(type, file, decoder: decoder)
+        try? load(type: type, file, decoder: decoder)
     }
-
-
     
-    /***/
+    /// An error describing failures during loading data from the Bundle.
     enum LoadingError: Error {
         case url(_ file: String),
              fetching(_ file: String, error: Error),

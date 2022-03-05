@@ -109,19 +109,21 @@ public extension Array {
     
 }
 
-//MARK: - new sequence methods
+// MARK: - (new sequence methods)
 
 public extension Sequence {
 
-    /***/
     @inlinable
+    /// <#Description#>
+    /// - Returns: <#description#>
     func sorted<Value: Comparable>(
         by keyPath: KeyPath<Element, Value>
     ) -> [Element] {
         self.sorted(by: keyPath, using: <)
     }
 
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     @inlinable
     func sorted<Value>(
         by keyPath: KeyPath<Element, Value>,

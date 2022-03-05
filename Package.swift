@@ -25,6 +25,8 @@ enum SourceID: String, CaseIterable {
 
 enum ResourceID: String, CaseIterable {
     case unitPlurals = "others/Localizable.stringsdict"
+    case decodableDict = "resources/DecodableDictionary.json",
+         decodableString = "resources/DecodableString.json"
     
     var name: String { rawValue }
 }
@@ -42,7 +44,10 @@ private let targets: [Target] = [
 ]
 
 private let testTargets: [Target] = [
-    .testTarget(.dates, dependencies: [.others])
+    .testTarget(.dates, dependencies: [.others]),
+    .testTarget(.collections),
+    .testTarget(.data, resources: [.decodableDict, .decodableString]),
+    .testTarget(.ui)
 ]
 
 //MARK: - defining the actual package

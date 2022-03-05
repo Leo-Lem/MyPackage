@@ -82,7 +82,7 @@ class MyDatesTests: XCTestCase {
             end = testData.dates.end,
             interval = testData.timeInterval
         
-        let acc = 0.005
+        let acc = 0.5
         
         comps.compatible.forEach { comp in
             XCTAssertEqual(start.distance(to: end, unit: comp)!, interval * testData.operand[comp]!, accuracy: acc)

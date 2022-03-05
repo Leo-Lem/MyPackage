@@ -132,6 +132,34 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MyPackage_MyCollectionsTests"
+               BuildableName = "MyPackage_MyCollectionsTests"
+               BlueprintName = "MyPackage_MyCollectionsTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MyPackage_MyDataTests"
+               BuildableName = "MyPackage_MyDataTests"
+               BlueprintName = "MyPackage_MyDataTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -147,6 +175,36 @@
                BlueprintIdentifier = "MyDatesTests"
                BuildableName = "MyDatesTests"
                BlueprintName = "MyDatesTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MyCollectionsTests"
+               BuildableName = "MyCollectionsTests"
+               BlueprintName = "MyCollectionsTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MyDataTests"
+               BuildableName = "MyDataTests"
+               BlueprintName = "MyDataTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "MySwiftUITests"
+               BuildableName = "MySwiftUITests"
+               BlueprintName = "MySwiftUITests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
