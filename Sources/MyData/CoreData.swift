@@ -37,3 +37,20 @@ public extension JSONDecoder {
     }
     
 }
+
+//MARK: - (CD Representable)
+
+/// A Swift Object which represents a CoreData object and optionally bridges it's properties/methods etc.
+public protocol CDRepresentable {
+    
+    /// The Type of the associated CoreData (CD)Object
+    associatedtype CDObject: NSManagedObject
+    
+    /// The CoreData (CD)Object to represent.
+    var cd: CDObject { get }
+    
+    /// Intializes a CDRepresentable with a given CoreData (CD)Object.
+    /// - Parameter cd: The CDObject to represent.
+    init(_ cd: CDObject)
+    
+}

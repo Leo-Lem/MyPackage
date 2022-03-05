@@ -8,8 +8,9 @@
 import Foundation
 
 public extension Bundle {
-    
-    /***/
+
+    /// <#Description#>
+    /// - Returns: <#description#>
     func load<T: Decodable>(
         _ type: T.Type = T.self,
         _ file: String,
@@ -27,6 +28,19 @@ public extension Bundle {
         
         return decoded
     }
+
+
+    /// <#Description#>
+    /// - Returns: <#description#>
+    func load<T: Decodable>(
+        _ type: T.Type = T.self,
+        optional file: String,
+        decoder: JSONDecoder = JSONDecoder()
+    ) -> T? {
+        try? load(type, file, decoder: decoder)
+    }
+
+
     
     /***/
     enum LoadingError: Error {

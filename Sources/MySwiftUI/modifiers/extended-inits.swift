@@ -338,6 +338,16 @@ public extension Text {
     }
     
     /***/
+    init<Content: StringProtocol>(
+        _ content: Content,
+        color: Color?
+    ) {
+        self.init(content)
+        
+        self = self.foregroundColor(color)
+    }
+    
+    /***/
     init(
         _ image: Image,
         font: Font? = nil,

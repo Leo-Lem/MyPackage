@@ -156,7 +156,7 @@ public extension View {
      */
     func link(
         _ url: URL
-    ) -> Link<Self> {
+    ) -> some View {
         Link(destination: url) { self }
     }
     
@@ -192,8 +192,74 @@ public extension View {
      
      - returns: A NavigationView containing the view.
      */
-    func embedInNavigation() -> NavigationView<Self> {
-        NavigationView(content: { self })
+    func embedInNavigation() -> some View {
+        NavigationView { self }
+    }
+    
+    /**
+     Embeds the view inside a NavigationView.
+     
+     ```
+     Text("Hello, World!")
+        .padding()
+        .navigationTitle("My Content View")
+        .embedInNavigation()
+     ```
+     
+     - parameter placeholder: A View as a fallback in column layout.
+     - returns: A NavigationView containing the view.
+     */
+    func embedInNavigation<Placeholder: View>(
+        @ViewBuilder _ placeholder: () -> Placeholder
+    ) -> some View {
+        NavigationView {
+            self
+            placeholder()
+        }
+    }
+    
+    /**
+     Embeds the view inside a NavigationView.
+     
+     ```
+     Text("Hello, World!")
+        .padding()
+        .navigationTitle("My Content View")
+        .embedInNavigation()
+     ```
+     
+     - parameter placeholder: A localized string key to be displayed as a placeholder in column layout.
+     - returns: A NavigationView containing the view.
+     */
+    func embedInNavigation(
+        placeholder: LocalizedStringKey
+    ) -> some View {
+        NavigationView {
+            self
+            Text(placeholder)
+        }
+    }
+    
+    /**
+     Embeds the view inside a NavigationView.
+     
+     ```
+     Text("Hello, World!")
+        .padding()
+        .navigationTitle("My Content View")
+        .embedInNavigation()
+     ```
+     
+     - parameter placeholder: A string to be displayed as a placeholder in column layout.
+     - returns: A NavigationView containing the view.
+     */
+    func embedInNavigation<S: StringProtocol>(
+        placeholder: S
+    ) -> some View {
+        NavigationView {
+            self
+            Text(placeholder)
+        }
     }
     
 }
@@ -209,4 +275,51 @@ public extension View {
         self.offset(x: 0, y: Double(total - position) * 10)
     }
     
+}
+
+// MARK: - (replace if)
+public extension View {
+
+    /***/
+    func replace<Content: View>(
+        if condition: @autoclosure () -> Bool,
+        placeholder: () -> Content
+    ) -> some View {
+        Group {
+            if condition() {
+                placeholder()
+            } else {
+                self
+            }
+        }
+    }
+
+    /***/
+    func replace<S: StringProtocol>(
+        if condition: @autoclosure () -> Bool,
+        placeholder: S
+    ) -> some View {
+        Group {
+            if condition() {
+                Text(placeholder).foregroundColor(.secondary)
+            } else {
+                self
+            }
+        }
+    }
+
+    /***/
+    func replace(
+        if condition: @autoclosure () -> Bool,
+        placeholder: LocalizedStringKey
+    ) -> some View {
+        Group {
+            if condition() {
+                Text(placeholder).foregroundColor(.secondary)
+            } else {
+                self
+            }
+        }
+    }
+
 }

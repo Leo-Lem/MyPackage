@@ -110,16 +110,26 @@ public extension Array {
 }
 
 //MARK: - new sequence methods
+
 public extension Sequence {
-    
-    /****/
+
+    /***/
     @inlinable
-    func sorted<T: Comparable>(
-        by keyPath: KeyPath<Element, T>
+    func sorted<Value: Comparable>(
+        by keyPath: KeyPath<Element, Value>
     ) -> [Element] {
-        self.sorted { a, b in
-            return a[keyPath: keyPath] < b[keyPath: keyPath]
+        self.sorted(by: keyPath, using: <)
+    }
+
+    /***/
+    @inlinable
+    func sorted<Value>(
+        by keyPath: KeyPath<Element, Value>,
+        using areInIncreasingOrder: (Value, Value) throws -> Bool
+    ) rethrows -> [Element] {
+        try self.sorted {
+            try areInIncreasingOrder($0[keyPath: keyPath], $1[keyPath: keyPath])
         }
     }
-    
+
 }
