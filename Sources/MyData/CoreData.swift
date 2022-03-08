@@ -44,13 +44,26 @@ public extension JSONDecoder {
 public protocol CDRepresentable {
     
     /// The Type of the associated CoreData (CD)Object
-    associatedtype CDObject: NSManagedObject
+    associatedtype CD: NSManagedObject
     
     /// The CoreData (CD)Object to represent.
-    var cd: CDObject { get }
+    var cd: CD { get }
     
     /// Intializes a CDRepresentable with a given CoreData (CD)Object.
     /// - Parameter cd: The CDObject to represent.
-    init(_ cd: CDObject)
+    init(_ cd: CD)
+    
+}
+
+public extension CDRepresentable {
+    
+    init?(_ cd: CD?) {
+        if let cd = cd { self.init(cd) } else { return nil }
+    }
+    
+    func willChange() { cd.objectWillChange.send() }
+    
+    var id: NSManagedObjectID { self.cd.objectID }
+    var idString: String { self.cd.objectID.uriRepresentation().absoluteString }
     
 }

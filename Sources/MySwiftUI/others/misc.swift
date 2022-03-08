@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreHaptics
 
 // MARK: - (Arithmetic)
 public extension CGPoint {
@@ -90,4 +91,40 @@ public extension Color {
                secondarySystemGroupedBackground = Color(.secondarySystemGroupedBackground),
                tertiarySystemGroupedBackground = Color(.tertiarySystemGroupedBackground)
 
+}
+
+// MARK: - (Haptics)
+public extension CHHapticPattern {
+    
+    /// <#Description#>
+    /// - Returns: <#description#>
+    static func taDa() throws -> CHHapticPattern {
+        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0),
+            intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1),
+            start = CHHapticParameterCurve.ControlPoint(relativeTime: 0, value: 1),
+            end = CHHapticParameterCurve.ControlPoint(relativeTime: 1, value: 0)
+        
+        let parameter = CHHapticParameterCurve(
+            parameterID: .hapticIntensityControl,
+            controlPoints: [start, end],
+            relativeTime: 0
+        )
+       
+        let event1 = CHHapticEvent(
+            eventType: .hapticTransient,
+            parameters: [intensity, sharpness],
+            relativeTime: 0
+        )
+        
+        // create a continuous haptic event starting immediately and lasting one second
+        let event2 = CHHapticEvent(
+            eventType: .hapticContinuous,
+            parameters: [sharpness, intensity],
+            relativeTime: 0.125,
+            duration: 1
+        )
+        
+        return try CHHapticPattern(events: [event1, event2], parameterCurves: [parameter])
+    }
+    
 }
