@@ -24,7 +24,7 @@ public struct LoadingDots: View {
     }
 }
 
-//MARK: - Previews
+// MARK: - (Previews)
 struct LoadingDots_Previews: PreviewProvider {
     static var previews: some View {
         LoadingDots()

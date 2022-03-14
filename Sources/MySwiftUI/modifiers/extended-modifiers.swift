@@ -7,15 +7,12 @@
 
 import SwiftUI
 
-//MARK: - animation(_ value)
+// MARK: - (animation(_ value))
 public extension View {
     
-    /**
-     Applies the default animation to the view when the specified value changes.
-
-     - parameter value: A value to monitor for changes.
-     - returns: A view that applies the default animation to this view whenever `value` changes.
-    */
+    /// Applies the default animation to the view when the specified value changes.
+    /// - Parameter value: A value to monitor for changes.
+    /// - Returns: A view that applies the default animation to this view whenever `value` changes.
     func animation<V: Equatable>(
         _ value: V
     ) -> some View {
@@ -25,23 +22,21 @@ public extension View {
     
 }
 
-//MARK: - disabled(color)
+// MARK: - (disabled(color))
 public extension View {
     
-    /**
-     Colors the disabled view with the provided color
-     
-     ```
-     Text("My tappable text...")
-        .onTapGesture { /*do something*/ }
-        .disabled(myCondition, color: .gray)
-     ```
-     
-     - parameters:
-        - condition: A Boolean value that determines whether users can interact with this view.
-        - color: The color to apply.
-     - returns: A view that controls whether users can interact with this view and is colored according to its interaction state.
-     */
+    /// Colors the disabled view with the provided color
+    ///
+    /// ```
+    /// Text("My tappable text...")
+    ///     .onTapGesture { /*do something*/ }
+    ///     .disabled(myCondition, color: .gray)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - condition: A Boolean value that determines whether users can interact with this view.
+    ///   - color: The color to apply.
+    /// - Returns: A view that controls whether users can interact with this view and is colored according to its interaction state.
     func disabled(
         _ condition: Bool,
         color: Color
@@ -56,11 +51,14 @@ public extension View {
 }
 
 #if canImport(UIKit)
-//MARK: - cornerRadius
-//TODO: add documentation
+// MARK: - (cornerRadius)
 extension View {
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - radius: <#radius description#>
+    ///   - corners: <#corners description#>
+    /// - Returns: <#description#>
     public func cornerRadius(
         _ radius: CGFloat = 10,
         corners: UIRectCorner
@@ -68,7 +66,8 @@ extension View {
         clipShape(RoundedCorner(radius: radius, corners: corners) )
     }
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     public func cornerRadius<Style: ShapeStyle>(_ cornerRadius: Double, border: (style: Style, width: Double)) -> some View {
         self
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
@@ -80,7 +79,7 @@ extension View {
     
 }
 
-/***/
+/// <#Description#>
 private struct RoundedCorner: Shape {
     let radius: CGFloat, corners: UIRectCorner
     
@@ -96,13 +95,14 @@ private struct RoundedCorner: Shape {
 }
 #endif
 
-//MARK: - background(image, opacity)
-//TODO: add documentation
+// MARK: - (background(image, opacity))
 public extension View {
     
-    /**
-     
-     */
+    /// <#Description#>
+    /// - Parameters:
+    ///   - image: <#image description#>
+    ///   - opacity: <#opacity description#>
+    /// - Returns: <#description#>
     func background(image: String, opacity: Double = 1) -> some View {
         self.background {
                 Image(decorative: image)
@@ -115,7 +115,7 @@ public extension View {
     
 }
 
-//MARK: - alert(optional)
+// MARK: - (alert(optional)
 //TODO: add documentation
 public extension View {
     
@@ -202,7 +202,7 @@ public extension View {
         alert(item, title: title, actions: {_ in}, message: {_ in})
     }
     
-    //MARK: - with title method
+    // MARK: with title method
     func alert<T, A, M>(
         _ item: Binding<T?>,
         title: (T) -> Text,

@@ -7,8 +7,12 @@
 
 import Foundation
 
-//MARK: - undefined method for placeholders during development
-/***/
+
+
+// MARK: - (undefined method for placeholders during development)
+
+/// <#Description#>
+/// - Returns: <#description#>
 public func undefined<T>(
     hint: String = "",
     file: StaticString = #file,
@@ -18,13 +22,19 @@ public func undefined<T>(
     fatalError("undefined \(T.self)\(message)", file: file, line: line)
 }
 
-//MARK: - AnyEquatable
-/***/
+
+
+// MARK: - (AnyEquatable)
+
+/// <#Description#>
 public struct AnyEquatable {
     
+    /// <#Description#>
     public var item: Any
+    
     private let equals: (Self) -> Bool
     
+    /// <#Description#>
     public init<T: Equatable>(_ item: T) {
         self.item = item
         
@@ -41,20 +51,24 @@ extension AnyEquatable: Equatable {
     
 }
 
-//MARK: - AnyComparable
-/***/
+
+
+// MARK: - (AnyComparable)
+
+/// <#Description#>
 public struct AnyComparable {
     
+    /// <#Description#>
     public var item: Any
+    
     private let equals: (Self) -> Bool,
                 less: (Self) -> Bool
     
+    /// <#Description#>
     public init<T: Comparable>(_ item: T) {
         self.item = item
         
-        self.equals = {
-            item == $0.item as? T
-        }
+        self.equals = { item == $0.item as? T }
         
         self.less = {
             guard let other = ($0.item as? T) else { return false }
@@ -82,20 +96,23 @@ extension AnyComparable: Comparable {
     
 }
 
-//MARK: - Task
+
+
+// MARK: - (Task)
 public extension Task where Success == Never, Failure == Never {
     
-    /***/
-    static func sleep(
-        seconds: Double
-    ) async throws {
+    /// <#Description#>
+    /// - Parameter seconds: <#seconds description#>
+    static func sleep(seconds: Double) async throws {
         let duration = UInt64(seconds) * 1_000_000_000
         try await self.sleep(nanoseconds: duration)
     }
     
 }
 
-//MARK: - Intializable procotol
+
+
+// MARK: - (Intializable procotol)
 /// Types which have an initializer without parameters can conform.
 public protocol Initializable { init() }
 

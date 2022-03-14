@@ -7,135 +7,92 @@
 
 import Foundation
 
-//MARK: - operator overloading
+
+
+// MARK: - (operator overloading)
+
 public extension Array {
     
-    /***/
-    @inlinable
-    static func + (
-        lhs: Self,
-        rhs: Self.Element
-    ) -> Self {
-        lhs.appending(rhs)
-    }
+    @inlinable static func + (lhs: Self, rhs: Self.Element) -> Self { lhs.appending(rhs) }
+    @inlinable static func + (lhs: Self.Element, rhs: Self) -> Self { rhs.prepending(lhs) }
     
-    /***/
-    @inlinable
-    static func + (
-        lhs: Self.Element,
-        rhs: Self
-    ) -> Self {
-        rhs.prepending(lhs)
-    }
-    
-    /***/
-    @inlinable
-    static func - (
-        lhs: Self,
-        rhs: Self.Element
-    ) -> Self where Element: Equatable {
+    @inlinable static func - (lhs: Self, rhs: Self.Element) -> Self where Element: Equatable {
         lhs.removingAll { $0 == rhs }
     }
     
-    /***/
-    @inlinable
-    static func - (
-        lhs: Self.Element,
-        rhs: Self
-    ) -> Self where Element: Equatable {
-        rhs.removingAll { $0 == lhs }
-    }
-    
-    /***/
-    @inlinable
-    static func += (
-        lhs: inout Self,
-        rhs: Self.Element
-    ) {
+    @inlinable static func += (lhs: inout Self, rhs: Self.Element) {
         lhs.append(rhs)
     }
     
-    /***/
-    @inlinable
-    static func -= (
-        lhs: inout Self,
-        rhs: Self.Element
-    ) where Element: Equatable  {
+    @inlinable static func -= (lhs: inout Self, rhs: Self.Element) where Element: Equatable  {
         lhs.removeAll { $0 == rhs }
     }
     
 }
 
-//MARK: - sum operator
+
+
+// MARK: - (sum operator)
+
 prefix operator ∑
 
 public extension Sequence where Element: AdditiveArithmetic {
     
-    /***/
-    @inlinable
-    prefix static func ∑ (
-        _ sequence: Self
-    ) -> Element {
+    @inlinable prefix static func ∑ (_ sequence: Self) -> Element {
         sequence.reduce(.zero, +)
     }
     
-    /***/
-    @inlinable
-    func sum() -> Element {
-        reduce(.zero, +)
-    }
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func sum() -> Element { reduce(.zero, +) }
     
 }
 
 public extension Sequence {
     
-    /***/
-    @inlinable
-    func sum<T: AdditiveArithmetic>(_ predicate: (Element) -> T) -> T {
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func sum<T>(_ predicate: (Element) -> T) -> T where T: AdditiveArithmetic {
         self.reduce(.zero) { $0 + predicate($1) }
     }
     
 }
 
 
-//MARK: - average operator
+
+// MARK: - (average operator)
+
 prefix operator ∑/
 
 public extension Collection where Element: BinaryInteger {
     
-    ///
-    prefix static func ∑/ (
-        _ collection: Self
-    ) -> Element {
+    @inlinable prefix static func ∑/ (_ collection: Self) -> Element {
         collection.average()
     }
     
-    /***/
-    func average() -> Element {
+    @inlinable prefix static func ∑/ <T>(_ collection: Self) -> T where T: BinaryInteger {
+        collection.average()
+    }
+    
+    @inlinable prefix static func ∑/ <T>(_ collection: Self) -> T where T: BinaryFloatingPoint {
+        collection.average()
+    }
+    
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func average() -> Element {
         isEmpty ? .zero : sum() / Element(count)
     }
     
-    ///
-    prefix static func ∑/ <T: BinaryInteger>(
-        _ collection: Self
-    ) -> T {
-        collection.average()
-    }
-    
-    /***/
-    func average<T: BinaryInteger>() -> T {
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func average<T>() -> T where T: BinaryInteger {
         isEmpty ? .zero : T(sum()) / T(count)
     }
     
-    ///
-    prefix static func ∑/ <T: BinaryFloatingPoint>(
-        _ collection: Self
-    ) -> T {
-        collection.average()
-    }
-    
-    /***/
-    func average<T: BinaryFloatingPoint>() -> T {
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func average<T>() -> T where T: BinaryFloatingPoint {
         isEmpty ? .zero : T(sum()) / T(count)
     }
     
@@ -143,27 +100,23 @@ public extension Collection where Element: BinaryInteger {
 
 public extension Collection where Element: BinaryFloatingPoint {
     
-    ///
-    prefix static func ∑/ (
-        _ collection: Self
-    ) -> Element {
+    @inlinable prefix static func ∑/ (_ collection: Self) -> Element {
         collection.average()
     }
     
-    /***/
-    func average() -> Element {
+    @inlinable prefix static func ∑/ <T>(_ collection: Self) -> T where T: BinaryFloatingPoint {
+        collection.average()
+    }
+    
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func average() -> Element {
         isEmpty ? .zero : sum() / Element(count)
     }
     
-    ///
-    prefix static func ∑/ <T: BinaryFloatingPoint>(
-        _ collection: Self
-    ) -> T {
-        collection.average()
-    }
-    
-    /***/
-    func average<T: BinaryFloatingPoint>() -> T {
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func average<T>() -> T where T: BinaryFloatingPoint {
         isEmpty ? .zero : T(sum()) / T(count)
     }
     

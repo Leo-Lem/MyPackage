@@ -9,11 +9,13 @@ import SwiftUI
 import MyNumbers
 import MyCollections
 
-/***/
+/// <#Description#>
 public struct PieChart: View {
-
+    
+    /// <#Description#>
     let segments: [Segment]
     
+    /// <#Description#>
     public let strokeWidth: Double?,
                legend: Bool
     
@@ -47,7 +49,11 @@ public struct PieChart: View {
         }
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - dataPoints: <#dataPoints description#>
+    ///   - stroke: <#stroke description#>
+    ///   - legend: <#legend description#>
     public init(
         _ dataPoints: [DataPoint],
         stroke: Stroke = .all,
@@ -65,9 +71,10 @@ public struct PieChart: View {
     
 }
 
-//MARK: - Segments
+// MARK: - (Segments)
 extension PieChart {
-    /***/
+    
+    /// <#Description#>
     struct Segment: Shape, Identifiable {
         ///
         let data: DataPoint
@@ -98,10 +105,10 @@ extension PieChart {
     }
 }
 
-//MARK: - Stroke for making a donut chart
+// MARK: - (Stroke for making a donut chart)
 public extension PieChart {
     
-    /***/
+    /// <#Description#>
     enum Stroke {
         case all, thin, regular, thick, custom(Double)
         
@@ -131,7 +138,7 @@ extension PieChart.Stroke: ExpressibleByFloatLiteral, ExpressibleByIntegerLitera
 }
 
 #if DEBUG
-//MARK: - Previews
+// MARK: - (Previews)
 struct PieChart_Previews: PreviewProvider {
     static var previews: some View {
         VStack {

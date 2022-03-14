@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  TimeInterval.swift
 //  
 //
 //  Created by Leopold Lemmermann on 20.01.22.
@@ -9,12 +9,12 @@ import Foundation
 
 public extension TimeInterval {
     
-    /***/
+    /// <#Description#>
     init<V: BinaryInteger>(_ value: V, _ unit: Calendar.Component) {
         self.init(valuesWithUnit: (value, unit))
     }
     
-    /***/
+    /// <#Description#>
     init<V: BinaryInteger>(valuesWithUnit: (value: V, unit: Calendar.Component)...) {
         var interval: TimeInterval = 0
         
@@ -40,7 +40,9 @@ public extension TimeInterval {
         self = interval
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameter unit: <#unit description#>
+    /// - Returns: <#description#>
     func convert(to unit: Calendar.Component) -> Double? {
         var value = self
         

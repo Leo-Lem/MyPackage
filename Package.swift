@@ -3,7 +3,7 @@
 import PackageDescription
 import Foundation
 
-//MARK: - defining the library names
+// MARK: - (defining the library names)
 enum TargetID: String, CaseIterable {
     case ui = "MySwiftUI",
          others = "MyOthers",
@@ -31,12 +31,12 @@ enum ResourceID: String, CaseIterable {
     var name: String { rawValue }
 }
 
-//MARK: - defining the targets
+// MARK: - (defining the targets)
 private let name = "MyPackage"
 private let targets: [Target] = [
     .target(.ui, dependencies: [.others, .data, .collections, .numbers, .strings, .dates], exclude: [.unitPlurals]),
     .target(.others),
-    .target(.data, dependencies: [.others]),
+    .target(.data, dependencies: [.others, .collections]),
     .target(.collections, dependencies: [.numbers]),
     .target(.numbers),
     .target(.strings, dependencies: [.others, .collections]),
@@ -50,7 +50,7 @@ private let testTargets: [Target] = [
     .testTarget(.ui)
 ]
 
-//MARK: - defining the actual package
+// MARK: - (defining the package)
 let package = Package(
     name: name,
     platforms: [.iOS(.v15), .macOS(.v12)],
@@ -58,7 +58,7 @@ let package = Package(
     targets: targets + testTargets
 )
 
-//MARK: - simpler, more robust target declaration
+// MARK: - (simpler, more robust target declaration)
 fileprivate extension Target {
     static func target(
         _ id: TargetID,

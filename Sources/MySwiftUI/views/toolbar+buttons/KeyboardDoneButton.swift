@@ -20,17 +20,15 @@ public struct KeyboardDoneButton: ToolbarContent {
 
 public extension KeyboardDoneButton {
     
-    /***/
-    init(
-        _ action: @escaping () -> Void
-    ) {
+    /// <#Description#>
+    /// - Parameter action: <#action description#>
+    init(_ action: @escaping () -> Void) {
         self.action = action
     }
     
-    /***/
-    init(
-        _ focus: FocusState<Bool>.Binding
-    ) {
+    /// <#Description#>
+    /// - Parameter focus: <#focus description#>
+    init(_ focus: FocusState<Bool>.Binding) {
         self.action = { focus.wrappedValue = false }
     }
 }

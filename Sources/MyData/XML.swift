@@ -7,8 +7,11 @@
 
 import Foundation
 
-//MARK: - XMLNode
-/***/
+
+
+// MARK: - (XMLNode)
+
+/// <#Description#>
 public final class XMLNode {
     
     /// The tag of the given XML Node
@@ -20,7 +23,12 @@ public final class XMLNode {
     /// The child nodes contained in the given XML node.
     public var childNodes: [XMLNode]
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - tag: <#tag description#>
+    ///   - data: <#data description#>
+    ///   - attributes: <#attributes description#>
+    ///   - childNodes: <#childNodes description#>
     public init(
         tag: String,
         data: String,
@@ -37,12 +45,17 @@ public final class XMLNode {
 
 public extension XMLNode {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter name: <#name description#>
+    /// - Returns: <#description#>
     func getAttribute(_ name: String) -> String? {
         attributes[name]
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - name: <#name description#>
+    ///   - newValue: <#newValue description#>
     func setAttribute(
         _ name: String,
         newValue: String
@@ -50,7 +63,9 @@ public extension XMLNode {
         attributes[name] = newValue
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameter name: <#name description#>
+    /// - Returns: <#description#>
     func getElementsByTagName(_ name: String) -> [XMLNode] {
         var results = [XMLNode]()
         
@@ -69,6 +84,7 @@ public extension XMLNode {
 
 extension XMLNode: CustomStringConvertible {
     
+    /// <#Description#>
     public var description: String {
         generateXMLString()
     }
@@ -132,15 +148,19 @@ extension XMLNode: CustomStringConvertible {
     
 }
 
-//MARK: - MicroDOM
-/***/
+
+
+// MARK: - (MicroDOM)
+
+/// <#Description#>
 public final class MicroDOM: NSObject, XMLParserDelegate {
     
     private let parser: XMLParser
     private var stack = [XMLNode](),
                 tree: XMLNode?
     
-    /***/
+    /// <#Description#>
+    /// - Parameter data: <#data description#>
     public init(data: Data) {
         parser = XMLParser(data: data)
         super.init()
@@ -150,7 +170,8 @@ public final class MicroDOM: NSObject, XMLParserDelegate {
 
 public extension MicroDOM {
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     func parse() -> XMLNode? {
         parser.parse()
         
@@ -159,7 +180,13 @@ public extension MicroDOM {
         return tree
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - parser: <#parser description#>
+    ///   - elementName: <#elementName description#>
+    ///   - namespaceURI: <#namespaceURI description#>
+    ///   - qName: <#qName description#>
+    ///   - attributeDict: <#attributeDict description#>
     func parser(
         _ parser: XMLParser,
         didStartElement elementName: String,
@@ -176,7 +203,12 @@ public extension MicroDOM {
         stack.append(node)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - parser: <#parser description#>
+    ///   - elementName: <#elementName description#>
+    ///   - namespaceURI: <#namespaceURI description#>
+    ///   - qName: <#qName description#>
     func parser(
         _ parser: XMLParser,
         didEndElement elementName: String,
@@ -192,7 +224,10 @@ public extension MicroDOM {
         }
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - parser: <#parser description#>
+    ///   - string: <#string description#>
     func parser(
         _ parser: XMLParser,
         foundCharacters string: String

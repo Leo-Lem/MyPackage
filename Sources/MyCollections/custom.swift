@@ -8,58 +8,65 @@
 import Foundation
 import MyNumbers
 
-//MARK: - Stack
-/***/
+
+
+// MARK: - (stack)
+
+/// <#Description#>
 public struct Stack<Element> {
     
-    ///
+    /// <#Description#>
     private var array = [Element]()
     
 }
 
 public extension Stack {
     
-    /***/
-    mutating func push(
-        _ elements: Element...
-    ) {
-        array.append(contentsOf: elements)
-    }
+    /// <#Description#>
+    /// - Parameter elements: <#elements description#>
+    mutating func push(_ elements: Element...) { array.append(contentsOf: elements) }
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     mutating func pop() -> Element? { array.popLast() }
     
-    /***/
+    /// <#Description#>
     mutating func removeAll() { array.removeAll() }
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     func peek() -> Element? { array.last }
     
-    /***/
+    /// <#Description#>
+    /// - Parameter predicate: <#predicate description#>
+    /// - Returns: <#description#>
     func contains(
         where predicate: (Element) throws -> Bool
     ) rethrows -> Bool {
         try array.contains(where: predicate)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    /// - Returns: <#description#>
     func contains(
         _ element: Element
     ) -> Bool where Element: Equatable {
         array.contains(element)
     }
     
-    ///
+    /// <#Description#>
     var count: Int { array.count }
     
-    ///
+    /// <#Description#>
     var isEmpty: Bool { array.isEmpty }
     
 }
 
 extension Stack: ExpressibleByArrayLiteral {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter elements: <#elements description#>
     public init(arrayLiteral elements: Element...) {
         self.array = elements
     }
@@ -68,6 +75,7 @@ extension Stack: ExpressibleByArrayLiteral {
 
 extension Stack: CustomDebugStringConvertible {
     
+    /// A textual representation of this Stack, suitable for debugging.
     public var debugDescription: String {
         var result = "["
         var first = true
@@ -91,7 +99,8 @@ extension Stack: Decodable where Element: Decodable {}
 
 public extension Array {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter stack: <#stack description#>
     init(_ stack: Stack<Element>) {
         self.init()
         
@@ -103,8 +112,13 @@ public extension Array {
     
 }
 
-//MARK: - linked lists
-/***/
+
+
+// MARK: - (linked lists)
+
+// MARK: linked list
+
+/// <#Description#>
 public class LinkedList<Element>: ExpressibleByArrayLiteral {
     
     ///
@@ -174,17 +188,17 @@ extension LinkedList: Sequence {
     
 }
 
-//MARK: Doubly linked lists
-/***/
+// MARK: Doubly linked lists
+
+/// <#Description#>
 public final class DoublyLinkedList<Element>: LinkedList<Element> {
     
-    ///
+    /// <#Description#>
     public var end: DoublyNode<Element>?
     
-    /***/
-    public required init(
-        arrayLiteral elements: Element...
-    ) {
+    /// <#Description#>
+    /// - Parameter elements: <#elements description#>
+    public required init(arrayLiteral elements: Element...) {
         super.init(array: elements)
         
         for element in elements {
@@ -192,13 +206,17 @@ public final class DoublyLinkedList<Element>: LinkedList<Element> {
         }
     }
     
-    /***/
+    /// <#Description#>
     public class DoublyNode<Element>: Node<Element> {
         
-        ///
+        /// <#Description#>
         public var last: DoublyNode?
         
-        /***/
+        /// <#Description#>
+        /// - Parameters:
+        ///   - value: <#value description#>
+        ///   - next: <#next description#>
+        ///   - last: <#last description#>
         public init(
                 _ value: Element,
                 next: DoublyNode? = nil,
@@ -211,30 +229,36 @@ public final class DoublyLinkedList<Element>: LinkedList<Element> {
     }
 }
 
-//MARK: - Queues and Deques
-//MARK: Queues
-/***/
+
+
+// MARK: - (Queues and Deques)
+
+// MARK: Queues
+
+/// <#Description#>
 public struct Queue<Element> {
     
+    /// <#Description#>
     private var array = [Element]()
     
 }
 
 public extension Queue {
     
-    ///
+    /// <#Description#>
     var first: Element? { array.first }
-    ///
+    
+    /// <#Description#>
     var last: Element? { array.last }
     
-    /***/
-    mutating func append(
-        _ element: Element
-    ) {
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    mutating func append(_ element: Element) {
         array.append(element)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     mutating func dequeue() -> Element? {
         guard array.count > 0 else { return nil }
         return array.remove(at: 0)
@@ -242,17 +266,18 @@ public extension Queue {
     
 }
 
-/***/
+/// <#Description#>
 public protocol Prioritized {
     
-    ///
+    /// <#Description#>
     var priority: Int { get }
     
 }
 
 extension Queue where Element: Prioritized {
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     public mutating func dequeue() -> Element? {
         guard let max = array
                 .enumerated()
@@ -266,8 +291,11 @@ extension Queue where Element: Prioritized {
 
 extension Queue: Sequence {
     
+    /// <#Description#>
+    /// - Returns: <#description#>
     public func makeIterator() -> some IteratorProtocol { Iterator(items: self.array) }
     
+    /// <#Description#>
     public struct Iterator<Element>: IteratorProtocol {
         public let items: [Element]
         private(set) var position = 0
@@ -284,65 +312,69 @@ extension Queue: Sequence {
 
 extension Queue: ExpressibleByArrayLiteral {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter elements: <#elements description#>
     public init(arrayLiteral elements: Element...) {
         self.array = elements
     }
     
 }
 
-//MARK: Deques
-/***/
+// MARK: Deques
+
+/// <#Description#>
 public struct Deque<Element> {
     
+    /// <#Description#>
     private var array = [Element]()
     
 }
 
 public extension Deque {
     
-    ///
+    /// <#Description#>
     var first: Element? { array.first }
-    ///
+    
+    /// <#Description#>
     var last: Element? { array.last }
     
-    /***/
-    mutating func prepend(
-        _ element: Element
-    ) {
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    mutating func prepend(_ element: Element) {
         array.prepend(element)
     }
     
-    /***/
-    mutating func append(
-        _ element: Element
-    ) {
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    mutating func append(_ element: Element) {
         array.append(element)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     mutating func dequeueFront() -> Element? {
         guard array.count > 0 else { return nil }
         return array.remove(at: 0)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     mutating func dequeueBack() -> Element? {
         guard array.count > 0 else { return nil }
         return array.removeLast()
     }
     
-    /***/
-    func firstIndex(
-        of element: Element
-    ) -> Int? where Element: Equatable {
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    /// - Returns: <#description#>
+    func firstIndex(of element: Element) -> Int? where Element: Equatable {
         array.firstIndex(of: element)
     }
     
-    /***/
-    func contains(
-        _ element: Element
-    ) -> Bool where Element: Equatable {
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    /// - Returns: <#description#>
+    func contains(_ element: Element) -> Bool where Element: Equatable {
         array.contains(element)
     }
     
@@ -350,8 +382,11 @@ public extension Deque {
 
 extension Deque: Sequence {
     
+    /// <#Description#>
+    /// - Returns: <#description#>
     public func makeIterator() -> some IteratorProtocol { Iterator(items: self.array) }
     
+    /// <#Description#>
     public struct Iterator<Element>: IteratorProtocol {
         public let items: [Element]
         private(set) var position = 0
@@ -368,26 +403,38 @@ extension Deque: Sequence {
 
 extension Deque: ExpressibleByArrayLiteral {
     
-    /***/
+    
+    /// <#Description#>
+    /// - Parameter elements: <#elements description#>
     public init(arrayLiteral elements: Element...) {
         self.array = elements
     }
     
 }
 
-//MARK: - Trees
-//MARK: class implementation
-/***/
+
+
+// MARK: - (Trees)
+
+// MARK: class implementation
+
+/// <#Description#>
 public final class Node<Value> {
     
-    ///
+    /// <#Description#>
     public var value: Value
-    ///
+    
+    /// <#Description#>
     public private(set) var children: [Node]
-    ///
+    
+    /// <#Description#>
     weak var parent: Node?
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - value: <#value description#>
+    ///   - parent: <#parent description#>
+    ///   - children: <#children description#>
     public init(
         _ value: Value,
         parent: Node? = nil,
@@ -402,13 +449,18 @@ public final class Node<Value> {
 
 public extension Node {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter child: <#child description#>
     func add(child: Node) { children.append(child) }
     
-    ///
+    /// <#Description#>
     var count: Int { 1 + children.sum(\.count) }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - value: <#value description#>
+    ///   - parent: <#parent description#>
+    ///   - builder: <#builder description#>
     convenience init(
         _ value: Value,
         parent: Node? = nil,
@@ -417,7 +469,7 @@ public extension Node {
         self.init(value, children: builder())
     }
     
-    /***/
+    /// <#Description#>
     @resultBuilder
     struct Builder {
         static func buildBlock<Value>(
@@ -431,16 +483,10 @@ public extension Node {
 
 public extension Node where Value: Equatable {
     
-    /**
-    Tries finding a specific root or child node by value.
-     
-     - parameter value: The value of the node to find.
-     
-     - returns: If it exists, the tree node with the specified `value`, otherwise nil.
-     */
-    func find(
-        _ value: Value
-    ) -> Node? {
+    /// Tries finding a specific root or child node by value.
+    /// - Parameter value: The value of the node to find.
+    /// - Returns: If it exists, the tree node with the specified `value`, otherwise nil.
+    func find(_ value: Value) -> Node? {
         if self.value == value { return self }
         
         for child in children {
@@ -471,17 +517,13 @@ extension Node: Comparable where Value: Comparable {
     }
 }
 
+// MARK: struct implementation
 /*
-//MARK: struct implementation
-/***/
 public struct Node<Value> {
     
-    ///
     public var value: Value
-    ///
     public private(set) var children: [Node]
     
-    /***/
     public init(_ value: Value, children: [Node] = []) {
         self.value = value
         self.children = children
@@ -491,13 +533,10 @@ public struct Node<Value> {
 
 public extension Node {
     
-    /***/
     mutating func add(child: Node) { children.append(child) }
     
-    ///
     var count: Int { 1 + children.sum(\.count) }
     
-    /***/
     init(
         _ value: Value,
         @Builder builder: () -> [Node]
@@ -505,7 +544,6 @@ public extension Node {
         self.init(value, children: builder())
     }
     
-    /***/
     @resultBuilder
     struct Builder {
         static func buildBlock<Value>(
@@ -519,16 +557,10 @@ public extension Node {
 
 public extension Node where Value: Equatable {
     
-    /**
-    Tries finding a specific root or child node by value.
-     
-     - parameter value: The value of the node to find.
-     
-     - returns: If it exists, the tree node with the specified `value`, otherwise nil.
-     */
-    func find(
-        _ value: Value
-    ) -> Node? {
+    /// Tries finding a specific root or child node by value.
+    /// - Parameter value: The value of the node to find.
+    /// - Returns: If it exists, the tree node with the specified `value`, otherwise nil.
+    func find(_ value: Value) -> Node? {
         if self.value == value { return self }
         
         for child in children {
@@ -548,20 +580,21 @@ extension Node: Comparable where Value: Comparable {
 }
 */
 
-//MARK: Binary Trees
-/***/
+// MARK: binary trees
+
+/// <#Description#>
 public final class BinaryNode<Value> {
     
-    ///
+    /// <#Description#>
     public var value: Value
-    ///
+    
+    /// <#Description#>
     public var left: BinaryNode?,
                right: BinaryNode?
     
-    /***/
-    public init(
-        _ value: Value
-    ) {
+    /// <#Description#>
+    /// - Parameter value: <#value description#>
+    public init(_ value: Value) {
         self.value = value
     }
     
@@ -569,6 +602,7 @@ public final class BinaryNode<Value> {
 
 public extension Array {
     
+    /// <#Description#>
     init<T>(_ node: BinaryNode<T>) where Element == BinaryNode<T> {
         self.init()
         
@@ -581,10 +615,11 @@ public extension Array {
 
 extension BinaryNode: Sequence {
     
-    public func makeIterator() -> some IteratorProtocol {
-        Array(self).makeIterator()
-    }
+    /// <#Description#>
+    /// - Returns: <#description#>
+    public func makeIterator() -> some IteratorProtocol { Array(self).makeIterator() }
     
+    /// <#Description#>
     struct Iterator<Value>: IteratorProtocol {
         var items: [Node<Value>]
         var position = 0
@@ -602,3 +637,49 @@ extension BinaryNode: Sequence {
 }
 
 
+
+// MARK: - (counted set)
+
+/// A Swift implementation of a counted set. Keeps count of added duplicates, rather than just discarding them.
+public struct CountedSet<Element: Hashable> {
+    
+    private var elements: [Element: Int] = .init()
+    
+}
+
+public extension CountedSet {
+    
+    /// The number of different elements in the set.
+    var count: Int { elements.count }
+    
+    /// Indicates whether there are no elements in the set.
+    var isEmpty: Bool { elements.isEmpty }
+    
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    mutating func insert(_ element: Element) {
+        elements[element, default: 0] += 1
+    }
+    
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    mutating func remove(_ element: Element) {
+        if elements[element, default: 0] > 0 {
+            elements[element, default: 0] -= 1
+        }
+    }
+    
+    /// <#Description#>
+    /// - Parameter element: <#element description#>
+    /// - Returns: <#description#>
+    func count(for element: Element) -> Int? { elements[element] }
+    
+}
+
+extension CountedSet: Sequence {
+    
+    /// <#Description#>
+    /// - Returns: <#description#>
+    public func makeIterator() -> some IteratorProtocol { elements.makeIterator() }
+    
+}

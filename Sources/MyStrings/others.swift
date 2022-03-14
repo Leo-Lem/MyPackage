@@ -9,10 +9,10 @@ import Foundation
 
 public extension String {
     
-    /***/
-    static func placeholder(
-        length: Int
-    ) -> String {
+    /// <#Description#>
+    /// - Parameter length: <#length description#>
+    /// - Returns: <#description#>
+    static func placeholder(length: Int) -> String {
         String(repeating: "X", count: length)
     }
     
@@ -21,12 +21,21 @@ public extension String {
         self.trimmingCharacters(in: .whitespacesAndNewlines).count
     }
     
+    /// <#Description#>
+    var givenName: String? {
+        let formatter = PersonNameComponentsFormatter()
+        let comps = formatter.personNameComponents(from: self)
+        return comps?.givenName
+    }
+    
 }
 
-//MARK: - unit formatting
+// MARK: - (unit formatting)
 public extension Unit {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter style: <#style description#>
+    /// - Returns: <#description#>
     func formatted(_ style: Formatter.UnitStyle) -> String {
         let formatter = MeasurementFormatter()
         formatter.unitStyle = style
@@ -34,4 +43,3 @@ public extension Unit {
     }
     
 }
-

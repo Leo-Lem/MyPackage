@@ -52,9 +52,11 @@ extension Spinner {
     }
 }
 
-//MARK: - Previews
+#if DEBUG
+// MARK: - (Previews)
 struct Spinner_Previews: PreviewProvider {
     static var previews: some View {
         Spinner(size: .large)
     }
 }
+#endif

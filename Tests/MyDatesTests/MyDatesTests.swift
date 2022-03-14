@@ -45,7 +45,7 @@ class MyDatesTests: XCTestCase {
     
     
     
-    //MARK: - time interval init with unit
+    // MARK: - (time interval init with unit
     func testInitWithUnit() {
         let testData = TestData()
         let comps = testData.comps
@@ -59,7 +59,7 @@ class MyDatesTests: XCTestCase {
         comps.incompatible.forEach { comp in XCTAssertEqual(TimeInterval(1, comp), 1) }
     }
     
-    //MARK: - converting time interval
+    // MARK: - (converting time interval
     func testConverting() {
         let testData = TestData()
         let comps = testData.comps
@@ -74,7 +74,7 @@ class MyDatesTests: XCTestCase {
         testData.comps.incompatible.forEach { comp in XCTAssertNil(interval.convert(to: comp)) }
     }
     
-    //MARK: - distance calculation
+    // MARK: - (distance calculation
     func testDistance() {
         let testData = TestData()
         let comps = testData.comps
@@ -92,7 +92,7 @@ class MyDatesTests: XCTestCase {
         comps.incompatible.forEach { comp in XCTAssertNil(start.distance(to: end, unit: comp)) }
     }
     
-    //MARK: - enumerating dates
+    // MARK: - (enumerating dates
     func testEnumerate() {
         let date = Date(timeIntervalSinceReferenceDate: 0)
         
@@ -108,12 +108,12 @@ class MyDatesTests: XCTestCase {
         
     }
     
-    //MARK: - startof and endof
+    // MARK: - (startof and endof
     func testStartOf() {
         
     }
     
-    //MARK: - striding over dates
+    // MARK: - (striding over dates
     
     
 }

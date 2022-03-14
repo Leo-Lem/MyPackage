@@ -7,9 +7,13 @@
 
 import Foundation
 
-//MARK: - unit conversion on numbers
+
+
+// MARK: - (unit conversion on numbers)
 public extension BinaryInteger {
     
+    /// <#Description#>
+    /// - Returns: <#description#>
     func converted<Unit: Dimension>(from input: Unit, to output: Unit) -> Double {
         let converter: (input: UnitConverter, output: UnitConverter) = (input.converter, output.converter)
         
@@ -19,7 +23,7 @@ public extension BinaryInteger {
         return output
     }
     
-    mutating func convert<Unit: Dimension>(from input: Unit, to output: Unit) {
+    @inlinable mutating func convert<Unit: Dimension>(from input: Unit, to output: Unit) {
         self = Self(converted(from: input, to: output))
     }
     
@@ -27,6 +31,8 @@ public extension BinaryInteger {
 
 public extension BinaryFloatingPoint {
     
+    /// <#Description#>
+    /// - Returns: <#description#>
     func converted<Unit: Dimension>(from input: Unit, to output: Unit) -> Double {
         let converter: (input: UnitConverter, output: UnitConverter) = (input.converter, output.converter)
         
@@ -36,7 +42,8 @@ public extension BinaryFloatingPoint {
         return output
     }
     
-    mutating func convert<Unit: Dimension>(from input: Unit, to output: Unit) {
+    /// <#Description#>
+    @inlinable mutating func convert<Unit: Dimension>(from input: Unit, to output: Unit) {
         self = Self(converted(from: input, to: output))
     }
     
@@ -44,7 +51,10 @@ public extension BinaryFloatingPoint {
 
 public extension Double {
     
-    static var twoPi: Self { 2 * .pi }
-    static var halfPi: Self { pi / 2 }
+    /// <#Description#>
+    @inlinable static var twoPi: Self { 2 * .pi }
+    
+    /// <#Description#>
+    @inlinable static var halfPi: Self { pi / 2 }
     
 }

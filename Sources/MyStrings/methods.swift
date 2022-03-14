@@ -9,38 +9,26 @@ import Foundation
 import MyOthers
 import MyCollections
 
-//MARK: - containsAny and unorderedContains
+// MARK: - (containsAny and unorderedContains)
 public extension String {
     
-    /**
-     Returns true if the string contains any of the specified characters
-     
-     - parameter characters: 0 or more characters to be checked
-     
-     - returns: A boolean indicating if the string contains any of the characters.
-     */
-    func containsAny(
-        _ characters: Character...
-    ) -> Bool {
+    /// Checks if the string contains any of the specified characters
+    /// - Parameter characters: 0 or more characters to be checked.
+    /// - Returns: A boolean indicating whether the string contains any of the characters.
+    func containsAny(_ characters: Character...) -> Bool {
         self.contains { characters.contains($0) }
     }
     
-    /**
-     Returns true if the string contains any of the specified characters
-     
-     - parameter characters: 0 or more characters to be checked
-     
-     - returns: A boolean indicating if the string contains any of the characters.
-     */
-    func containsAny(
-        _ characters: CharacterSet
-    ) -> Bool {
+    /// Checks if the string contains any of the specified characters
+    /// - Parameter characters: 0 or more characters to be checked.
+    /// - Returns: A boolean indicating whether the string contains any of the characters.
+    func containsAny(_ characters: CharacterSet) -> Bool {
         self.trimmingCharacters(in: characters).count == self.count
     }
     
-    /**
-     
-     */
+    /// <#Description#>
+    /// - Parameter other: <#other description#>
+    /// - Returns: <#description#>
     func unorderedContains(_ other: String) -> Bool {
         var word = self
         
@@ -55,17 +43,19 @@ public extension String {
     
 }
 
-//MARK: - removeFirst
+// MARK: - (removeFirst)
 public extension String {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter expression: <#expression description#>
     mutating func removeFirst(where expression: (Self.Element) -> Bool) {
         if let index = self.firstIndex(where: expression) {
             self.remove(at: index)
         }
     }
-
-    /***/
+    
+    /// <#Description#>
+    /// - Parameter char: <#char description#>
     mutating func removeFirst(char: String.Element) {
         if let index = self.firstIndex(of: char) {
             self.remove(at: index)
@@ -75,24 +65,24 @@ public extension String {
 
 public extension String {
     
-    /***/
-    mutating func lowercase(
-        locale: Locale? = nil
-    ) {
+    /// <#Description#>
+    /// - Parameter locale: <#locale description#>
+    mutating func lowercase(locale: Locale? = nil) {
         self.apply { $0.lowercased(with: locale) }
     }
     
-    /***/
-    mutating func trimCharacters(
-        in characterSet: CharacterSet
-    ) {
+    /// <#Description#>
+    /// - Parameter characterSet: <#characterSet description#>
+    mutating func trimCharacters(in characterSet: CharacterSet) {
         self.apply { $0.trimmingCharacters(in: characterSet) }
     }
+    
 }
 
 public extension String {
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     func paddedForPrint() -> String {
         """
         ----------------------------------
@@ -103,17 +93,21 @@ public extension String {
         """
     }
     
-    /***/
+    /// <#Description#>
     mutating func padForPrint() {
         self.apply { $0.paddedForPrint() }
     }
     
 }
 
-//MARK: - getInitials
+// MARK: - (getInitials)
 public extension PersonNameComponentsFormatter {
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - isPhonetic: <#isPhonetic description#>
+    ///   - locale: <#locale description#>
+    ///   - style: <#style description#>
     convenience init(
         isPhonetic: Bool? = nil,
         locale: Locale? = nil,
@@ -129,7 +123,8 @@ public extension PersonNameComponentsFormatter {
 
 public extension String {
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     func getInitials() -> String? {
         
         typealias Formatter = PersonNameComponentsFormatter

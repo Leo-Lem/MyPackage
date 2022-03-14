@@ -7,18 +7,21 @@
 
 import SwiftUI
 
-/***/
+/// <#Description#>
 public struct DataPoint: Identifiable {
-    ///
+    
+    /// <#Description#>
     public let value: Double,
-               ///
                title: String,
-               ///
                id: Int,
-               ///
                color: Color
-               
-    /***/
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - value: <#value description#>
+    ///   - title: <#title description#>
+    ///   - id: <#id description#>
+    ///   - color: <#color description#>
     public init(
         _ value: Double,
         title: String = "",

@@ -7,20 +7,15 @@
 
 import Foundation
 
-//MARK: - documents directory shortcut
 public extension FileManager {
     
-    ///
+    /// <#Description#>
     static var documentsDirectory: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
     
-}
-
-//MARK: - loading and saving
-public extension FileManager {
-    
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     func load<T: Decodable>(
         _ type: T.Type = T.self,
         _ file: String,
@@ -39,7 +34,7 @@ public extension FileManager {
         return decoded
     }
     
-    /***/
+    /// <#Description#>
     enum LoadingError: Error {
         case fetching(_ file: String, error: Error),
              decoding(_ file: String, error: Error)
@@ -52,7 +47,7 @@ public extension FileManager {
         }
     }
     
-    /***/
+    /// <#Description#>
     func save<T: Encodable>(
         _ object: T,
         file: String,
@@ -67,7 +62,7 @@ public extension FileManager {
         do { try data.write(to: url) } catch { throw SavingError.saving(file, error: error) }
     }
     
-    /***/
+    /// <#Description#>
     enum SavingError: Error {
         case encoding(_ file: String, error: Error),
              saving(_ file: String, error: Error)

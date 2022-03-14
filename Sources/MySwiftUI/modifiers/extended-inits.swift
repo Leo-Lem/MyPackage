@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-//MARK: - Button
+// MARK: - (Button)
 public extension Button {
     
-    /***/
+    /// <#Description#>
     enum PrimitiveAction {
         case toggle(Binding<Bool>),
              `true`(Binding<Bool>),
@@ -29,44 +29,51 @@ public extension Button {
 
 public extension Button where Label == Text {
     
-    /**
-     Creates a button that generates its label from a string.
-     
-     - parameters:
-        - title: A string that describes the purpose of the button's `action`.
-        - primitiveAction: A `PrimitiveAction` from which the real action is derived.
-     */
+    /// Creates a button that generates its label from a string.
+    /// - Parameters:
+    ///    - title: A string that describes the purpose of the button's `action`.
+    ///    - primitiveAction: A `PrimitiveAction` from which the real action is derived.
     init<S: StringProtocol>(
-        _ title: S,
+        _ title: @autoclosure () -> S,
         primitiveAction: PrimitiveAction
     ) {
-        self.init(title, action: primitiveAction.action)
+        self.init(title(), action: primitiveAction.action)
     }
     
-    /**
-     Creates a button that generates its label from a string.
-     
-     - parameters:
-        - title: A LocalizedStringKey that describes the purpose of the button's `action`.
-        - primitiveAction: A `PrimitiveAction` from which the real action is derived.
-     */
+    /// Creates a button that generates its label from a string.
+    /// - Parameters:
+    ///    - title: A `LocalizedStringKey` describing the purpose of the button's `action`.
+    ///    - primitiveAction: A `PrimitiveAction` from which the real action is derived.
     init(
-        _ title: LocalizedStringKey,
+        _ title: @autoclosure () -> LocalizedStringKey,
         primitiveAction: PrimitiveAction
     ) {
-        self.init(title, action: primitiveAction.action)
+        self.init(title(), action: primitiveAction.action)
     }
+    
 }
 
 public extension Button where Label == Image {
     
-    /***/
-    init(systemImage: String, action: @escaping () -> Void)  {
+    /// <#Description#>
+    /// - Parameters:
+    ///   - systemImage: <#systemImage description#>
+    ///   - action: <#action description#>
+    init(
+        systemImage: String,
+        action: @escaping () -> Void
+    )  {
         self.init(action: action) { Image(systemName: systemImage) }
     }
     
-    /***/
-    init(systemImage: String, primitiveAction: PrimitiveAction) {
+    /// <#Description#>
+    /// - Parameters:
+    ///   - systemImage: <#systemImage description#>
+    ///   - primitiveAction: <#primitiveAction description#>
+    init(
+        systemImage: String,
+        primitiveAction: PrimitiveAction
+    ) {
         self.init(systemImage: systemImage, action: primitiveAction.action)
     }
     
@@ -75,17 +82,23 @@ public extension Button where Label == Image {
 
 public extension Button {
     
-    /***/
-    init(primitiveAction: PrimitiveAction, label: @escaping () -> Label) {
+    /// <#Description#>
+    /// - Parameters:
+    ///   - primitiveAction: <#primitiveAction description#>
+    ///   - label: <#label description#>
+    init(
+        primitiveAction: PrimitiveAction,
+        label: @escaping () -> Label
+    ) {
         self.init(action: primitiveAction.action, label: label)
     }
     
 }
 
-//MARK: - DatePicker
+// MARK: - (DatePicker)
 public extension DatePicker {
     
-    /***/
+    /// <#Description#>
     init(
         label: String = "",
         _ date: Binding<Date>,
@@ -102,26 +115,37 @@ public extension DatePicker {
     
 }
 
-//MARK: - ForEach
+// MARK: - (ForEach)
 import MyNumbers
 public extension ForEach where Data == Range<Int>, ID == Int, Content: View {
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - data: <#data description#>
+    ///   - id: <#id description#>
+    ///   - content: <#content description#>
     init(_ data: ClosedRange<Int>, id: KeyPath<Data.Element, ID>, @ViewBuilder content: @escaping (ID) -> Content) {
         self.init((data.lowerBound)..<(data.upperBound+), id: id, content: content)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - data: <#data description#>
+    ///   - content: <#content description#>
     init(_ data: ClosedRange<Int>, @ViewBuilder content: @escaping (ID) -> Content) {
         self.init(data, id: \.self, content: content)
     }
     
 }
 
-//MARK: - Menu
+// MARK: - (Menu)
 public extension Menu where Label == Image {
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - systemImage: <#systemImage description#>
+    ///   - content: <#content description#>
+    ///   - primaryAction: <#primaryAction description#>
     init(systemImage: String, content: () -> Content, primaryAction: (() -> Void)? = nil) {
         if let primaryAction = primaryAction {
             self.init(content: content, label: { Image(systemName: systemImage) }, primaryAction: primaryAction)
@@ -132,7 +156,7 @@ public extension Menu where Label == Image {
     
 }
 
-//MARK: - Picker
+// MARK: - (Picker)
 public extension Picker {
     
     //MARK: hashable item id
@@ -265,18 +289,21 @@ public extension Picker {
     }
 }
 
-//MARK: - Shape
-//TODO: add documentation
+// MARK: - (Shape)
 public extension Shape where Self == Rectangle {
     
-    /***/
+    /// <#Description#>
     static var rectangle: Self { Rectangle() }
     
 }
 
 public extension Shape where Self == RoundedRectangle {
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - cornerRadius: <#cornerRadius description#>
+    ///   - style: <#style description#>
+    /// - Returns: <#description#>
     static func roundedRectangle(
         cornerRadius: CGFloat,
         style: RoundedCornerStyle = .circular
@@ -284,7 +311,11 @@ public extension Shape where Self == RoundedRectangle {
         RoundedRectangle(cornerRadius: cornerRadius, style: style)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - cornerSize: <#cornerSize description#>
+    ///   - style: <#style description#>
+    /// - Returns: <#description#>
     static func roundedRectangle(
         cornerSize: CGSize,
         style: RoundedCornerStyle = .circular
@@ -296,35 +327,36 @@ public extension Shape where Self == RoundedRectangle {
 
 public extension Shape where Self == Circle {
     
-    /***/
+    /// <#Description#>
     static var circle: Circle { Circle() }
     
 }
 
 public extension Shape where Self == Ellipse {
     
-    /***/
+    /// <#Description#>
     static var ellipse: Ellipse { Ellipse() }
     
 }
 
 public extension Shape where Self == Capsule {
     
-    /***/
+    /// <#Description#>
     static var capsule: Capsule { Capsule() }
     
-    /***/
+    /// <#Description#>
+    /// - Parameter style: <#style description#>
+    /// - Returns: <#description#>
     static func capsule(style: RoundedCornerStyle) -> Capsule {
         Capsule(style: style)
     }
     
 }
 
-//MARK: - Text
-//TODO: add documentation
+// MARK: - (Text)
 public extension Text {
     
-    /***/
+    /// <#Description#>
     init<Content: StringProtocol>(
         _ content: Content,
         font: Font?,
@@ -337,7 +369,7 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
     init<Content: StringProtocol>(
         _ content: Content,
         color: Color?
@@ -347,7 +379,11 @@ public extension Text {
         self = self.foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - image: <#image description#>
+    ///   - font: <#font description#>
+    ///   - color: <#color description#>
     init(
         _ image: Image,
         font: Font? = nil,
@@ -360,7 +396,11 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - dates: <#dates description#>
+    ///   - font: <#font description#>
+    ///   - color: <#color description#>
     init(
         _ dates: ClosedRange<Date>,
         font: Font? = nil,
@@ -373,7 +413,11 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - interval: <#interval description#>
+    ///   - font: <#font description#>
+    ///   - color: <#color description#>
     init(
         _ interval: DateInterval,
         font: Font? = nil,
@@ -386,7 +430,11 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - attributedContent: <#attributedContent description#>
+    ///   - font: <#font description#>
+    ///   - color: <#color description#>
     init(
         _ attributedContent: AttributedString,
         font: Font?,
@@ -399,7 +447,7 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
     init<Style: FormatStyle>(
         _ input: Style.FormatInput,
         format: Style,
@@ -413,7 +461,12 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - date: <#date description#>
+    ///   - style: <#style description#>
+    ///   - font: <#font description#>
+    ///   - color: <#color description#>
     init(
         _ date: Date,
         style: DateStyle,
@@ -427,7 +480,12 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - subject: <#subject description#>
+    ///   - formatter: <#formatter description#>
+    ///   - font: <#font description#>
+    ///   - color: <#color description#>
     init<T: ReferenceConvertible>(
         _ subject: T,
         formatter: Formatter,
@@ -441,7 +499,14 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - key: <#key description#>
+    ///   - tableName: <#tableName description#>
+    ///   - bundle: <#bundle description#>
+    ///   - comment: <#comment description#>
+    ///   - font: <#font description#>
+    ///   - color: <#color description#>
     init(
         _ key: LocalizedStringKey,
         tableName: String? = nil,
@@ -457,7 +522,11 @@ public extension Text {
             .foregroundColor(color)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - verbatim: <#verbatim description#>
+    ///   - font: <#font description#>
+    ///   - color: <#color description#>
     init(
         verbatim: String,
         font: Font? = nil,

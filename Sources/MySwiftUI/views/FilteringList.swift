@@ -9,7 +9,7 @@ import SwiftUI
 import MyCollections
 import MyOthers
 
-/***/
+/// <#Description#>
 public struct FilteringList<Data: RandomAccessCollection, RowContent: View>: View where Data.Element: Hashable {
     let list: [Data.Element]
     
@@ -74,7 +74,7 @@ private extension FilteringList {
     
 }
 
-//MARK: - Previews
+// MARK: - (Previews)
 struct FilteringList_Previews: PreviewProvider {
     static var previews: some View {
         FilteringList(["Hello", "world", "and", "friends!"], rowContent: Text.init)

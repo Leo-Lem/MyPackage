@@ -9,7 +9,9 @@ import CoreData
 
 public extension NSManagedObject {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter context: <#context description#>
+    /// - Returns: <#description#>
     func fetch(from context: NSManagedObjectContext) -> Self {
         guard let contextObject = context.object(with: self.objectID) as? Self else {
             context.insert(self)
@@ -23,14 +25,15 @@ public extension NSManagedObject {
 
 public extension CodingUserInfoKey {
     
-    ///
+    /// <#Description#>
     static let context = CodingUserInfoKey(rawValue: "context")!
     
 }
 
 public extension JSONDecoder {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter context: <#context description#>
     convenience init(context: NSManagedObjectContext) {
         self.init()
         self.userInfo[.context] = context
@@ -38,7 +41,9 @@ public extension JSONDecoder {
     
 }
 
-//MARK: - (CD Representable)
+
+
+// MARK: - (CD Representable)
 
 /// A Swift Object which represents a CoreData object and optionally bridges it's properties/methods etc.
 public protocol CDRepresentable {
@@ -57,6 +62,8 @@ public protocol CDRepresentable {
 
 public extension CDRepresentable {
     
+    /// Failable initializer for a `CDRepresentable` object.
+    /// - Parameter cd: The `CD` (associated CDObject) to represent.
     init?(_ cd: CD?) {
         if let cd = cd { self.init(cd) } else { return nil }
     }

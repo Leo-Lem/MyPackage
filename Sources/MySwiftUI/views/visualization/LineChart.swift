@@ -8,10 +8,13 @@
 import SwiftUI
 import MyCollections
 
+/// <#Description#>
 public struct LineChart: View {
     
+    /// <#Description#>
     public let data: [LineData]
     
+    /// <#Description#>
     public let lines: Int
 
     public var body: some View {
@@ -38,10 +41,19 @@ public struct LineChart: View {
         }
     }
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - data: <#data description#>
+    ///   - lines: <#lines description#>
     public init(_ data: [LineData], lines: Int = 10) {
         self.data = data
         self.lines = lines
     }
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - data: <#data description#>
+    ///   - lines: <#lines description#>
     public init(_ data: LineData..., lines: Int = 10) {
         self.init(data, lines: lines)
     }
@@ -89,6 +101,7 @@ extension LineChart.LineData: ExpressibleByArrayLiteral {
     
 }
 
+// MARK: - (Lines)
 extension LineChart {
     
     struct Line: Shape {
@@ -141,7 +154,7 @@ extension LineChart {
 }
 
 #if DEBUG
-//MARK: - Previews
+// MARK: - (Previews
 struct LineChart_Previews: PreviewProvider {
     private static let lineData: [LineChart.LineData] = Array(count: 5, { _ in LineChart.LineData(.lineExamples()) })
     

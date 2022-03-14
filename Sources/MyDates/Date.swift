@@ -9,26 +9,23 @@ import Foundation
 
 public extension Date {
     
-    /**
-     Returns the distance to another Date, converted to a calendar component.
-     
-        ```
-     let date1 = Date(timeIntervalSinceReferenceDate: 0),
-         date2 = Date(timeIntervalSinceReferenceDate: 1_000_000)
-
-     print(date1.distance(to: date2, unit: .day, precise: true)) // 11.574074074074074
-     print(date2.distance(to: date1, unit: .hour)) // -278.0
-        ```
-     - warning: Calculation is based on approximate time-interval conversions, so it may not be accurate (even when precise is true).
-     
-     - parameters:
-        - to: A date, to which the distance should be calculated.
-        - unit: A calendar component, the unit in which the distance is to be calculated.
-        - precise: A boolean, indicating whether to apply rounding
-        - cal: A calendar, to set the calendar for the calculation.
-     
-     - returns: A Double, or if the conversion is not possible nil.
-     */
+    /// Returns the distance to another Date, converted to a calendar component.
+    ///
+    /// ```
+    /// let date1 = Date(timeIntervalSinceReferenceDate: 0),
+    /// date2 = Date(timeIntervalSinceReferenceDate: 1_000_000)
+    ///
+    /// print(date1.distance(to: date2, unit: .day, precise: true)) // 11.574074074074074
+    /// print(date2.distance(to: date1, unit: .hour)) // -278.0
+    /// ```
+    ///
+    /// - warning: Calculation is based on approximate time-interval conversions, so it may not be accurate (even when precise is true).
+    /// - Parameters:
+    ///   - other: A date, to which the distance should be calculated.
+    ///   - unit: A calendar component, the unit in which the distance is to be calculated.
+    ///   - precise: A boolean, indicating whether to apply rounding
+    ///   - cal: A calendar, to set the calendar for the calculation.
+    /// - Returns: The distance as a Double, or if the conversion is not possible nil.
     func distance(
         to other: Date,
         unit: Calendar.Component,
@@ -40,25 +37,20 @@ public extension Date {
             self.distance(to: other).convert(to: unit)?.rounded()
     }
     
-    /**
-     Returns the distance inside a certain calendar component, optionally converted to a calendar component.
-     
-        ```
-     let date = Date(timeIntervalSinceReferenceDate: 1_000_000)
-
-     print(date.distance(for: .month, unit: .day)) // 31.0
-     print(date.distance(for: .year, unit: .hour, precise: true)) // 8759.999722222223
-        ```
-     - warning: Calculation is based on approximate time-interval conversions, so it may not be accurate.
-     
-     - parameters:
-        - for: A calendar component, the timespan of which to calculate the distance.
-        - unit: A calendar component, the unit in which the distance is to be calculated.
-        - precise: A boolean, indicating whether to apply rounding
-        - cal: A calendar, to set the calendar for the calculation
-     
-     - returns: A Double, or if the conversion is not possible nil.
-     */
+    /// Returns the distance inside a certain calendar component, optionally converted to a calendar component.
+    /// ```
+    /// let date = Date(timeIntervalSinceReferenceDate: 1_000_000)
+    ///
+    /// print(date.distance(for: .month, unit: .day)) // 31.0
+    /// print(date.distance(for: .year, unit: .hour, precise: true)) // 8759.999722222223
+    /// ```
+    /// - warning: Calculation is based on approximate time-interval conversions, so it may not be accurate.
+    /// - Parameters:
+    ///   - timespan: A calendar component, the timespan of which to calculate the distance.
+    ///   - unit: A calendar component, the unit in which the distance is to be calculated.
+    ///   - precise: A boolean, indicating whether to apply rounding
+    ///   - cal: A calendar, to set the calendar for the calculation
+    /// - Returns: The distance as a Double, or if the conversion is not possible nil.
     func distance(
         for timespan: Calendar.Component,
         unit: Calendar.Component = .second,
@@ -75,10 +67,17 @@ public extension Date {
     
 }
 
-//MARK: - startOf and endOf methods
+
+
+// MARK: - (startOf and endOf methods)
+
 public extension Date {
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - comp: <#comp description#>
+    ///   - cal: <#cal description#>
+    /// - Returns: <#description#>
     func startOf(_ comp: Calendar.Component, cal: Calendar = .current) -> Date? {
         var comps: Set<Calendar.Component> = [.calendar]
             
@@ -97,7 +96,11 @@ public extension Date {
         return cal.dateComponents(comps, from: self).date
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - comp: <#comp description#>
+    ///   - cal: <#cal description#>
+    /// - Returns: <#description#>
     func endOf(_ comp: Calendar.Component, cal: Calendar = .current) -> Date? {
         guard
             let start = startOf(comp, cal: cal),
@@ -109,22 +112,38 @@ public extension Date {
     
 }
 
-//MARK: - strideable conformance
+
+
+// MARK: - (strideable conformance)
+
 extension Date: Strideable {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter other: <#other description#>
+    /// - Returns: <#description#>
     public func distance(to other: Date) -> TimeInterval {
          other.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
     }
-
-    /***/
+    
+    /// <#Description#>
+    /// - Parameter n: <#n description#>
+    /// - Returns: <#description#>
     public func advanced(by n: TimeInterval) -> Date { self + n }
     
 }
 
-//MARK: - enumarating data ranges
+
+
+// MARK: - (enumarating date ranges)
+
 public extension Date {
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - interval: <#interval description#>
+    ///   - span: <#span description#>
+    ///   - cal: <#cal description#>
+    /// - Returns: <#description#>
     func enumerate(
         _ interval: Calendar.Component = .day,
         in span: Calendar.Component,
@@ -139,6 +158,11 @@ public extension Date {
 
 public extension ClosedRange where Bound == Date {
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - interval: <#interval description#>
+    ///   - cal: <#cal description#>
+    /// - Returns: <#description#>
     func enumerate(
         _ interval: Calendar.Component = .day,
         cal: Calendar = .current
@@ -148,10 +172,31 @@ public extension ClosedRange where Bound == Date {
     
 }
 
-//MARK: - isIn methods
+
+
+// MARK: - (isIn methods)
+
 public extension Date {
-    func isInToday(cal: Calendar = .current) -> Bool { cal.isDateInToday(self) }
-    func isInYesterday(cal: Calendar = .current) -> Bool { cal.isDateInYesterday(self) }
-    func isInTomorrow(cal: Calendar = .current) -> Bool { cal.isDateInTomorrow(self) }
-    func isIn(_ date: Date, cal: Calendar = .current) -> Bool { cal.isDate(self, inSameDayAs: date) }
+    
+    /// <#Description#>
+    /// - Parameter cal: <#cal description#>
+    /// - Returns: <#description#>
+    @inlinable func isInToday(cal: Calendar = .current) -> Bool { cal.isDateInToday(self) }
+    
+    /// <#Description#>
+    /// - Parameter cal: <#cal description#>
+    /// - Returns: <#description#>
+    @inlinable func isInYesterday(cal: Calendar = .current) -> Bool { cal.isDateInYesterday(self) }
+    
+    /// <#Description#>
+    /// - Parameter cal: <#cal description#>
+    /// - Returns: <#description#>
+    @inlinable func isInTomorrow(cal: Calendar = .current) -> Bool { cal.isDateInTomorrow(self) }
+    
+    /// <#Description#>
+    /// - Parameters:
+    ///   - date: <#date description#>
+    ///   - cal: <#cal description#>
+    /// - Returns: <#description#>
+    @inlinable func isIn(_ date: Date, cal: Calendar = .current) -> Bool { cal.isDate(self, inSameDayAs: date) }
 }

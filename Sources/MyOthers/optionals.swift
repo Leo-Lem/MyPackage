@@ -7,7 +7,9 @@
 
 import Foundation
 
-//MARK: - Optionals
+
+
+// MARK: - (Optionals)
 public extension Optional where Wrapped: Numeric {
     
     /// Contains either the value of the optional, or (if there is none) 0.
@@ -22,11 +24,8 @@ public extension Optional where Wrapped: Numeric {
 
 public extension Optional {
     
-    /**
-     Runs the provided function only if the optional has a value.
-     
-     - parameter action: A function taking in the unwrapped optional as a parameter.
-     */
+    /// Runs the provided function only if the optional has a value.
+    /// - Parameter action: A function taking in the unwrapped optional as a parameter.
     func then(_ action: (Wrapped) -> Void) {
         if case .some(let wrapped) = self {
             action(wrapped)
@@ -35,7 +34,9 @@ public extension Optional {
     
 }
 
-//MARK: - Result
+
+
+// MARK: - (Result)
 public extension Result {
     
     /// Contains an optional success value.
@@ -48,7 +49,7 @@ public extension Result {
     
 }
 
-//MARK: - operators
+// MARK: - (operators)
 infix operator ?=: AssignmentPrecedence
 infix operator +?=: AssignmentPrecedence
 infix operator -?=: AssignmentPrecedence

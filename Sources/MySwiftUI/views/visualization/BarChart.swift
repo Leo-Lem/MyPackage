@@ -8,9 +8,10 @@
 import SwiftUI
 import MyNumbers
 
-/***/
+/// <#Description#>
 public struct BarChart: View {
-    ///
+    
+    /// <#Description#>
     public let dataPoints: [DataPoint],
                lines: Int
     
@@ -46,6 +47,10 @@ public struct BarChart: View {
         }
     }
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - dataPoints: <#dataPoints description#>
+    ///   - lines: <#lines description#>
     public init(
         _ dataPoints: [DataPoint],
         lines: Int = 10
@@ -56,12 +61,11 @@ public struct BarChart: View {
         self.lines = lines
     }
     
-    ///
     private let maxValue: Double
 }
 
 #if DEBUG
-//MARK: - Previews
+// MARK: - (Previews)
 struct BarChart_Previews: PreviewProvider {
     static var previews: some View {
         VStack {

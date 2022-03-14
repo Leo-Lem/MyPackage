@@ -7,10 +7,13 @@
 
 import Foundation
 
-//MARK: - Sequence
+
+
+// MARK: - (Sequence)
 public extension Sequence {
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     func asyncMap<T>(
         _ transform: (Element) async throws -> T
     ) async rethrows -> [T] {
@@ -22,7 +25,8 @@ public extension Sequence {
         return values
     }
     
-    /***/
+    /// <#Description#>
+    /// - Returns: <#description#>
     func asyncCompactMap<T>(
         _ transform: (Element) async throws -> T?
     ) async rethrows -> [T] {
@@ -38,12 +42,14 @@ public extension Sequence {
     
 }
 
-//MARK: - AsyncSequence
+
+
+// MARK: - (AsyncSequence)
 public extension AsyncSequence {
     
-    /***/
-    @inlinable
-    func collect() async rethrows -> [Element] {
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func collect() async rethrows -> [Element] {
         try await reduce(into: [Element]()) { $0.append($1) }
     }
     

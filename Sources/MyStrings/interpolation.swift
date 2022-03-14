@@ -30,7 +30,7 @@ public extension String.StringInterpolation {
         if html { appendLiteral(lines ?? "<Unavailable>") }
     }
     
-    //MARK: - formatting collections of integers
+    // MARK: - (formatting collections of integers)
     /***/
     enum CollectionFormatStyle<C: Collection> where C.Element == Int {
         case elements, sum, average
@@ -50,18 +50,26 @@ public extension String.StringInterpolation {
     }
 }
 
-//MARK: - HTML interpolation
-public struct HTML: ExpressibleByStringInterpolation {
+// MARK: - (HTML interpolation)
+
+/// <#Description#>
+public struct HTML {
     
-    ///
+    /// <#Description#>
     private(set) public var content: String
     
-    /***/
+}
+
+extension HTML: ExpressibleByStringInterpolation {
+    
+    /// <#Description#>
+    /// - Parameter stringInterpolation: <#stringInterpolation description#>
     public init(stringInterpolation: StringInterpolation) {
         content = stringInterpolation.html
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameter value: <#value description#>
     public init(stringLiteral value: String) {
         content = value
     }
@@ -70,19 +78,23 @@ public struct HTML: ExpressibleByStringInterpolation {
 
 public extension HTML {
     
-    /***/
+    /// <#Description#>
     struct StringInterpolation: StringInterpolationProtocol {
         
-        ///
+        /// <#Description#>
         private(set) public var html = ""
         
-        /***/
+        /// <#Description#>
+        /// - Parameters:
+        ///   - literalCapacity: <#literalCapacity description#>
+        ///   - interpolationCount: <#interpolationCount description#>
         public init(literalCapacity: Int, interpolationCount: Int) {
             let estimatedSize = literalCapacity + interpolationCount * 16
             html.reserveCapacity(estimatedSize)
         }
         
-        /***/
+        /// <#Description#>
+        /// - Parameter literal: <#literal description#>
         public mutating func appendLiteral(_ literal: StringLiteralType) {
             html.append(literal)
         }
@@ -93,7 +105,8 @@ public extension HTML {
 
 public extension HTML.StringInterpolation {
     
-    /***/
+    /// <#Description#>
+    /// - Parameter content: <#content description#>
     private mutating func escapedAppend(_ content: String) {
         let replacements: [String: String] = ["&": "&amp", "<": "&lt", ">": "&gt", "\"": "&quot"]
         var replaced = content
@@ -105,14 +118,18 @@ public extension HTML.StringInterpolation {
         html.append(replaced)
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - url: <#url description#>
+    ///   - content: <#content description#>
     mutating func appendInterpolation(_ url: URL, content: String) {
         html.append("<a href=\"\(url.absoluteString)\">")
         escapedAppend(content)
         html.append("</a>")
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameter code: <#code description#>
     mutating func appendInterpolation(code: String) {
         if code.contains("\n") {
             html.append("<pre><code>")
@@ -125,7 +142,11 @@ public extension HTML.StringInterpolation {
         }
     }
     
-    /***/
+    /// <#Description#>
+    /// - Parameters:
+    ///   - date: <#date description#>
+    ///   - dateStyle: <#dateStyle description#>
+    ///   - timeStyle: <#timeStyle description#>
     mutating func appendInterpolation(_ date: Date, date dateStyle: Date.FormatStyle.DateStyle = .complete, time timeStyle: Date.FormatStyle.TimeStyle = .omitted) {
         html.append(date.formatted(date: dateStyle, time: timeStyle))
     }

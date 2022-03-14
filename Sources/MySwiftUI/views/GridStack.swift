@@ -28,7 +28,7 @@ public struct GridStack<Content: View>: View {
     }
 }
 
-//MARK: - Previews
+// MARK: - (Previews)
 struct GridStack_Previews: PreviewProvider {
     static var previews: some View {
         GridStack(rows: 5, columns: 5) { row, col in

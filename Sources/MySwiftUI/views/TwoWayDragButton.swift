@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-//MARK: - a button which can be dragged in two directions to trigger a respective action
+/// A button which can be dragged in two directions to trigger a respective action.
 public struct TwoWayDragButton: View {
+    
     let symbols: (lead: String, mid: String, trail: String),
         actions: (lead: () -> Void, trail: () -> Void)
     
@@ -56,6 +57,11 @@ public struct TwoWayDragButton: View {
     
     @State private var offset = CGSize.zero
     
+    /// <#Description#>
+    /// - Parameters:
+    ///   - symbols: <#symbols description#>
+    ///   - leadAction: <#leadAction description#>
+    ///   - trailAction: <#trailAction description#>
     public init(
         symbols: (lead: String, mid: String, trail: String) = ("minus.circle", "circle", "plus.circle"),
         leadAction: @escaping () -> Void = {}, trailAction: @escaping () -> Void = {}
@@ -63,12 +69,15 @@ public struct TwoWayDragButton: View {
         self.symbols = symbols
         self.actions = (leadAction, trailAction)
     }
+    
 }
 
-//MARK: - Previews
+#if DEBUG
+// MARK: - (Previews)
 struct TwoWayDragButton_Previews: PreviewProvider {
     static var previews: some View {
         TwoWayDragButton()
             .frame(height: 100, alignment: .center)
     }
 }
+#endif

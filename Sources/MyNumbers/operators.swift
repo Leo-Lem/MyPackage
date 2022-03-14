@@ -7,80 +7,94 @@
 
 import Foundation
 
-//MARK: - approx
+
+
+// MARK: - (approx)
+
 infix operator ≈: AssignmentPrecedence
+
 public extension Double {
-    static func ≈ <T: BinaryInteger>(lhs: inout T, rhs: Self) {
-        lhs = T(rhs)
-    }
+    @inlinable static func ≈ <T: BinaryInteger>(lhs: inout T, rhs: Self) { lhs = T(rhs) }
 }
 
-//MARK: - increment/decrement
+
+
+// MARK: - (increment/decrement)
+
 postfix operator +
 postfix operator -
+
 public extension AdditiveArithmetic where Self: ExpressibleByIntegerLiteral {
-    postfix static func + (num: Self) -> Self { num + 1 }
-    postfix static func - (num: Self) -> Self { num - 1 }
+    @inlinable postfix static func + (num: Self) -> Self { num + 1 }
+    @inlinable postfix static func - (num: Self) -> Self { num - 1 }
 }
 
 postfix operator ++
 postfix operator --
+
 public extension AdditiveArithmetic where Self: ExpressibleByIntegerLiteral {
-    postfix static func ++ (num: inout Self) { num += 1 }
-    postfix static func -- (num: inout Self) { num -= 1 }
+    @inlinable postfix static func ++ (num: inout Self) { num += 1 }
+    @inlinable postfix static func -- (num: inout Self) { num -= 1 }
 }
 
-//MARK: - powerOf
+
+
+// MARK: - (powerOf)
+
 infix operator **: DefaultPrecedence
+
 public extension Double {
-    static func ** (num: Self, power: Self) -> Self { pow(num, power) }
+    @inlinable static func ** (num: Self, power: Self) -> Self { pow(num, power) }
 }
 
 public extension BinaryInteger {
-    static func ** (num: Self, power: Self) -> Self { Self(pow(Double(num), Double(power))) }
+    @inlinable static func ** (num: Self, power: Self) -> Self { Self(pow(Double(num), Double(power))) }
 }
 
-//MARK: - extended arithmetics
+
+
+// MARK: - (extended arithmetics)
+
 public extension BinaryInteger {
+    @inlinable static func + <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) + rhs }
+    @inlinable static func + <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs + T(rhs) }
     
-    static func + <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) + rhs }
-    static func + <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs + T(rhs) }
+    @inlinable static func - <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) - rhs }
+    @inlinable static func - <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs - T(rhs) }
     
-    static func - <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) - rhs }
-    static func - <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs - T(rhs) }
+    @inlinable static func * <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) * rhs }
+    @inlinable static func * <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs * T(rhs) }
     
-    static func * <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) * rhs }
-    static func * <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs * T(rhs) }
-    
-    static func / <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) / rhs }
-    static func / <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs / T(rhs) }
-    
+    @inlinable static func / <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> T { T(lhs) / rhs }
+    @inlinable static func / <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> T { lhs / T(rhs) }
 }
 
-//MARK: - min, max, clamped
+
+
+// MARK: - (min, max, clamped)
+
 infix operator <|: AssignmentPrecedence
 infix operator |<: AssignmentPrecedence
 
 public extension Comparable {
     
     /// Max operator, bounds a value with an upper bound.
-    static func <| (
-        _ value: Self,
-        upperBound: Self
-    ) -> Self {
+    @inlinable static func <| (_ value: Self, upperBound: Self) -> Self {
         min(value, upperBound)
     }
     
     /// Min operator, bounds a value with a lower bound
-    static func |< (
-        lowerBound: Self,
-        _ value: Self
-    ) -> Self {
+    @inlinable static func |< (lowerBound: Self, _ value: Self) -> Self {
         max(value, lowerBound)
     }
     
-    /***/
-    static func clamped(
+    /// <#Description#>
+    /// - Parameters:
+    ///   - value: <#value description#>
+    ///   - lowerBound: <#lowerBound description#>
+    ///   - upperBound: <#upperBound description#>
+    /// - Returns: <#description#>
+    @inlinable static func clamped(
         _ value: Self,
         lowerBound: Self,
         upperBound: Self
@@ -88,28 +102,61 @@ public extension Comparable {
         lowerBound |< value <| upperBound
     }
     
-    /***/
-    mutating func clamp(lowerBound: Self, upperBound: Self) {
+    /// <#Description#>
+    /// - Parameters:
+    ///   - lowerBound: <#lowerBound description#>
+    ///   - upperBound: <#upperBound description#>
+    @inlinable mutating func clamp(lowerBound: Self, upperBound: Self) {
         self = Self.clamped(self, lowerBound: lowerBound, upperBound: upperBound)
     }
     
 }
 
-//MARK: - triangular operator
+
+
+// MARK: - (triangular operator)
+
 prefix operator ∆
 
 public extension BinaryInteger {
     
-    ///
-    prefix static func ∆ (
-        _ num: Self
-    ) -> Self {
-        num.triangular()
+    @inlinable prefix static func ∆ (_ num: Self) -> Self { num.triangular() }
+    
+    /// <#Description#>
+    /// - Returns: <#description#>
+    @inlinable func triangular() -> Self {
+        Self(Array(1...Int(self)).reduce(0, +))
     }
     
-    /***/
-    func triangular() -> Self {
-        Self(Array(1...Int(self)).reduce(0, +))
+}
+
+// MARK: - (spaceship operator)
+
+infix operator <=>
+
+public extension Comparable {
+    
+    static func <=> (lhs: Self, rhs: Self) -> ComparisonResult {
+        if lhs < rhs { return .orderedAscending }
+        if lhs > rhs { return .orderedDescending }
+        return .orderedSame
+    }
+    
+    /// <#Description#>
+    /// - Parameter other: <#other description#>
+    /// - Returns: <#description#>
+    @inlinable func compare(to other: Self) -> ComparisonResult { self <=> other }
+    
+}
+
+public extension BinaryInteger {
+    
+    static func <=> <T: BinaryFloatingPoint>(lhs: Self, rhs: T) -> ComparisonResult {
+        T(lhs) <=> rhs
+    }
+    
+    static func <=> <T: BinaryFloatingPoint>(lhs: T, rhs: Self) -> ComparisonResult {
+        lhs <=> T(rhs)
     }
     
 }

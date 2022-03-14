@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreHaptics
+import MyData
 
 // MARK: - (Arithmetic)
 public extension CGPoint {
@@ -84,6 +85,7 @@ public struct PreviewBinding<Value, Content: View>: View {
     }
 }
 
+#if canImport(UIKit)
 // MARK: - (New Colors)
 public extension Color {
 
@@ -92,6 +94,7 @@ public extension Color {
                tertiarySystemGroupedBackground = Color(.tertiarySystemGroupedBackground)
 
 }
+#endif
 
 // MARK: - (Haptics)
 public extension CHHapticPattern {
@@ -125,6 +128,44 @@ public extension CHHapticPattern {
         )
         
         return try CHHapticPattern(events: [event1, event2], parameterCurves: [parameter])
+    }
+    
+}
+
+
+
+// MARK: - (Document property wrapper)
+
+/// <#Description#>
+@propertyWrapper struct Document: DynamicProperty {
+    
+    @State private var value = ""
+    private let url: URL
+    
+    /// <#Description#>
+    var wrappedValue: String {
+        get { value }
+        nonmutating set {
+            do {
+                try newValue.write(to: url, atomically: true, encoding: .utf8)
+                value = newValue
+            } catch { print("Failed to write output: \(error).") }
+        }
+    }
+    
+    var projectedValue: Binding<String> {
+        Binding(
+            get: { wrappedValue },
+            set: { wrappedValue = $0 }
+        )
+    }
+    
+    /// <#Description#>
+    /// - Parameter filename: <#filename description#>
+    init(_ filename: String) {
+        url = FileManager.documentsDirectory.appendingPathComponent(filename)
+        let text = (try? String(contentsOf: url)) ?? ""
+        _value = State(initialValue: text)
     }
     
 }

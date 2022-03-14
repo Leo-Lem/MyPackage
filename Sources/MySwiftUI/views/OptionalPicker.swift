@@ -8,18 +8,19 @@
 import SwiftUI
 import MyOthers
 
+/// <#Description#>
 public struct OptionalPicker<T, ToggleView: View, PickerView: View>: View {
     
     @Binding var optional: T?
     let defaultValue: T
     
-    let toggle: (Binding<Bool>) -> ToggleView,
-        picker: (Binding<T>) -> PickerView
+    let toggle: ToggleClosure,
+        picker: PickerClosure
     
     public var body: some View {
         if !pickerFirst { toggle(binding.toggle) }
         
-        if optional != nil { picker(binding.picker) }
+        if optional != nil { picker(binding.picker, defaultValue) }
         
         if pickerFirst { toggle(binding.toggle) }
     }
@@ -37,6 +38,9 @@ public struct OptionalPicker<T, ToggleView: View, PickerView: View>: View {
 
 public extension OptionalPicker {
     
+    typealias ToggleClosure = (Binding<Bool>) -> ToggleView
+    typealias PickerClosure = (Binding<T>, _ default: T) -> PickerView
+    
     /// Initializes the OptionalPickerWithToggle so as the Toggle is displayed first (on top/on the left etc.).
     /// - Parameters:
     ///   - optional: The optional binding of which the value is picked.
@@ -46,8 +50,8 @@ public extension OptionalPicker {
     init(
         _ optional: Binding<T?>,
         default defaultValue: T,
-        toggle: @escaping (Binding<Bool>) -> ToggleView,
-        picker: @escaping (Binding<T>) -> PickerView
+        toggle: @escaping ToggleClosure,
+        picker: @escaping PickerClosure
     ) {
         _optional = optional
         self.defaultValue = defaultValue
@@ -68,8 +72,8 @@ public extension OptionalPicker {
     init(
         _ optional: Binding<T?>,
         default defaultValue: T,
-        picker: @escaping (Binding<T>) -> PickerView,
-        toggle: @escaping (Binding<Bool>) -> ToggleView
+        picker: @escaping PickerClosure,
+        toggle: @escaping ToggleClosure
     ) {
         _optional = optional
         self.defaultValue = defaultValue
@@ -87,8 +91,8 @@ public extension OptionalPicker {
     ///   - picker: A closure generating some View and taking in a binding of the unwrapped optional as parameter.
     init(
         _ optional: Binding<T?>,
-        toggle: @escaping (Binding<Bool>) -> ToggleView,
-        picker: @escaping (Binding<T>) -> PickerView
+        toggle: @escaping ToggleClosure,
+        picker: @escaping PickerClosure
     ) where T: Initializable {
         _optional = optional
         defaultValue = .init()
@@ -106,8 +110,8 @@ public extension OptionalPicker {
     ///   - toggle: A closure generating some View and taking in a bool binding (to switch the picker on and off).
     init(
         _ optional: Binding<T?>,
-        picker: @escaping (Binding<T>) -> PickerView,
-        toggle: @escaping (Binding<Bool>) -> ToggleView
+        picker: @escaping PickerClosure,
+        toggle: @escaping ToggleClosure
     ) where T: Initializable {
         _optional = optional
         defaultValue = .init()
@@ -126,7 +130,7 @@ struct OptionalPicker_Previews: PreviewProvider {
     static var previews: some View {
         List {
             PreviewBinding(Date.now) {
-                OptionalPicker($0.animation()) { Toggle("", isOn: $0) } picker: { DatePicker($0) }
+                OptionalPicker($0.animation()) { Toggle("", isOn: $0) } picker: { binding, def in DatePicker(binding) }
             }
         }
     }
